@@ -1,0 +1,163 @@
+openapi: 3.0.0
+info:
+  description: Testim.io Public API for branches and tests
+  version: 1.0.0
+  title: Testim.io Public Branches Labels API
+  contact:
+    email: support@testim.io
+servers:
+- url: https://api.testim.io
+- url: https://api.eu.testim.io
+security:
+- apiKeyAuth: []
+tags:
+- name: Labels
+  description: Execute labels
+paths:
+  /labels/run/{label}:
+    post:
+      summary: Execute labels remotely
+      tags:
+      - Labels
+      requestBody:
+        $ref: '#/components/requestBodies/ExecuteParameters'
+      parameters:
+      - in: path
+        name: label
+        required: true
+        description: The name of the label to execute
+        schema:
+          example: LABEL
+          type: string
+      responses:
+        '200':
+          description: Execution result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  executionId:
+                    type: string
+                    description: The ID of the new execution
+                  metaData:
+                    $ref: '#/components/schemas/metaData'
+        '400':
+          $ref: '#/components/responses/InvalidOrMissingProperty'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  responses:
+    TooManyRequests:
+      description: Project or API key rate limiting has been reached
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidApiKey:
+      description: 'Issue authenticating request: missing or invalid API Key'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidOrMissingProperty:
+      description: A required property is either missing or it's value is invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ApiKeyInsufficientPermissions:
+      description: API key does not have suffiecient permission to make the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  requestBodies:
+    ExecuteParameters:
+      description: A JSON object containing the execution setup information.<br>Must provide a Grid or Grid ID.<br>Params field size is limited to 67KB.
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              baseUrl:
+                description: An optional URL to use instead of default base URL.
+                example: http://demo.com/
+                type: string
+              branch:
+                description: The name of the branch to execute tests from
+                default: master
+                type: string
+              grid:
+                description: The name of grid to use for execution.
+                type: string
+              parallel:
+                description: The amount of tests to execute concurrently.
+                default: 1
+                type: number
+              params:
+                description: A JSON object (or stringified object) of parameters to add to the execution.
+                anyOf:
+                - type: string
+                - type: object
+                example:
+                  paramName: paramValue
+              resultLabels:
+                description: Labels to append to the execution result
+                type: array
+                items:
+                  type: string
+              retries:
+                description: The amount of retries to allow per test.
+                type: number
+              testConfig:
+                description: The name of test config to use for execution.
+                type: string
+              timeout:
+                description: The amount of seconds before a test will timeout.
+                default: 600
+                type: number
+              turboMode:
+                description: Wether to execute using Turbo Mode or not.
+                default: false
+                type: boolean
+  schemas:
+    requestId:
+      type: string
+      example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
+    metaData:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/requestId'
+      required:
+      - requestId
+    Error:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/requestId'
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            status:
+              type: number
+              example: 400
+          required:
+          - status
+          - message
+      required:
+      - string
+      - error
+  securitySchemes:
+    apiKeyAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: PAK-[RANDOM_KEY]

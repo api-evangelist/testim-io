@@ -1,0 +1,200 @@
+openapi: 3.0.0
+info:
+  description: Testim.io Public API for branches and tests
+  version: 1.0.0
+  title: Testim.io Public Branches Test plans API
+  contact:
+    email: support@testim.io
+servers:
+- url: https://api.testim.io
+- url: https://api.eu.testim.io
+security:
+- apiKeyAuth: []
+tags:
+- name: Test plans
+  description: Search test plans by name, and execute test plans
+paths:
+  /test-plans/search:
+    get:
+      summary: Get test-plans by name
+      description: List the ID and link of test-plans matching the given name
+      tags:
+      - Test plans
+      parameters:
+      - name: name
+        in: query
+        required: true
+        description: The name of test-plans to search.
+        example: plan
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Test-plan list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  testPlans:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Test-plan ID
+                        link:
+                          type: string
+                          description: Link to open test-plan in Testim editor
+                  metaData:
+                    $ref: '#/components/schemas/metaData'
+        '400':
+          $ref: '#/components/responses/InvalidOrMissingProperty'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /test-plans/run/{planId}:
+    post:
+      summary: Execute test plans remotely
+      tags:
+      - Test plans
+      requestBody:
+        description: A JSON object containing the execution setup information.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                branch:
+                  description: The name of the branch to execute tests from
+                  default: master
+                  type: string
+                parallel:
+                  description: The amount of tests to execute concurrently.
+                  default: 1
+                  type: number
+                params:
+                  description: A JSON object (or stringified object) of parameters to add to the execution.
+                  anyOf:
+                  - type: string
+                  - type: object
+                  example:
+                    paramName: paramValue
+                resultLabels:
+                  description: Labels to append to the execution result
+                  type: array
+                  items:
+                    type: string
+                retries:
+                  description: The amount of retries to allow per test.
+                  type: number
+                timeout:
+                  description: The amount of seconds before a test will timeout.
+                  default: 600
+                  type: number
+                turboMode:
+                  description: Wether to execute using Turbo Mode or not.
+                  default: false
+                  type: boolean
+                mode:
+                  $ref: '#/components/schemas/executionMode'
+      parameters:
+      - in: path
+        name: planId
+        required: true
+        description: The ID of the test plan to execute
+        schema:
+          example: PLAN_ID
+          type: string
+      responses:
+        '200':
+          description: Execution result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  executionId:
+                    type: string
+                    description: The ID of the new execution
+                  metaData:
+                    $ref: '#/components/schemas/metaData'
+        '400':
+          $ref: '#/components/responses/InvalidOrMissingProperty'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  schemas:
+    executionMode:
+      type: string
+      enum:
+      - extension
+      - selenium
+    requestId:
+      type: string
+      example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
+    metaData:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/requestId'
+      required:
+      - requestId
+    Error:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/requestId'
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            status:
+              type: number
+              example: 400
+          required:
+          - status
+          - message
+      required:
+      - string
+      - error
+  responses:
+    TooManyRequests:
+      description: Project or API key rate limiting has been reached
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidApiKey:
+      description: 'Issue authenticating request: missing or invalid API Key'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidOrMissingProperty:
+      description: A required property is either missing or it's value is invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ApiKeyInsufficientPermissions:
+      description: API key does not have suffiecient permission to make the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: PAK-[RANDOM_KEY]

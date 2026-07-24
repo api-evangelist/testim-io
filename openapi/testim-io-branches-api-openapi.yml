@@ -1,0 +1,265 @@
+openapi: 3.0.0
+info:
+  description: Testim.io Public API for branches and tests
+  version: 1.0.0
+  title: Testim.io Public Branches API
+  contact:
+    email: support@testim.io
+servers:
+- url: https://api.testim.io
+- url: https://api.eu.testim.io
+security:
+- apiKeyAuth: []
+tags:
+- name: Branches
+  description: List, create, delete and merge branches
+paths:
+  /branches:
+    post:
+      summary: Creates a new branch
+      description: Forks source branch into a new branch
+      tags:
+      - Branches
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sourceBranch:
+                  description: The name of the branch to fork
+                  example: master
+                  type: string
+                newBranch:
+                  description: The name of the new (target) branch
+                  example: feature-234_login_form
+                  type: string
+              required:
+              - sourceBranch
+              - newBranch
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name given in the request's newBranch field
+                  created_at:
+                    $ref: '#/components/schemas/created_at'
+                  metaData:
+                    $ref: '#/components/schemas/metaData'
+        '400':
+          $ref: '#/components/responses/InvalidOrMissingProperty'
+        '409':
+          $ref: '#/components/responses/BranchAlreadyExists'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    get:
+      summary: List branches
+      description: List all project branches
+      tags:
+      - Branches
+      responses:
+        '200':
+          description: List
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  branches:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: Branch name
+                        created_at:
+                          $ref: '#/components/schemas/created_at'
+                        modified_at:
+                          $ref: '#/components/schemas/modified_at'
+                  metaData:
+                    $ref: '#/components/schemas/metaData'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /branches/merge:
+    put:
+      summary: Merge branches
+      description: Merge source into target branch
+      tags:
+      - Branches
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                targetBranch:
+                  description: The name of the branch to merge into
+                  example: feature-234_login_form
+                  type: string
+                sourceBranch:
+                  description: The name of the branch to merge from
+                  example: master
+                  type: string
+                forceMerge:
+                  description: Whether to use heuristics to solve conflicts.
+                  type: boolean
+              required:
+              - sourceBranch
+              - targetBranch
+      responses:
+        '200':
+          description: Merged
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  metaData:
+                    $ref: '#/components/schemas/metaData'
+        '400':
+          $ref: '#/components/responses/InvalidOrMissingProperty'
+        '404':
+          $ref: '#/components/responses/BranchDoesNotExist'
+        '405':
+          $ref: '#/components/responses/BranchMergeError'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /branches/{branch}:
+    delete:
+      summary: Delete the given branch
+      tags:
+      - Branches
+      parameters:
+      - in: path
+        name: branch
+        required: true
+        description: The name of the branch to delete
+        schema:
+          example: CMPNY-23_fix_signin_form
+          type: string
+      responses:
+        '200':
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  metaData:
+                    $ref: '#/components/schemas/metaData'
+        '400':
+          $ref: '#/components/responses/InvalidOrMissingProperty'
+        '404':
+          $ref: '#/components/responses/BranchDoesNotExist'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  responses:
+    BranchMergeError:
+      description: Merge failed due to conflicts (forceMerge disabled)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Project or API key rate limiting has been reached
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidApiKey:
+      description: 'Issue authenticating request: missing or invalid API Key'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BranchDoesNotExist:
+      description: Specified branch does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BranchAlreadyExists:
+      description: A resource with that name already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidOrMissingProperty:
+      description: A required property is either missing or it's value is invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ApiKeyInsufficientPermissions:
+      description: API key does not have suffiecient permission to make the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    requestId:
+      type: string
+      example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
+    modified_at:
+      type: string
+      example: '2020-10-19T17:43:51.997Z'
+    metaData:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/requestId'
+      required:
+      - requestId
+    created_at:
+      type: string
+      example: '2020-10-13T16:52:47.571Z'
+    Error:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/requestId'
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            status:
+              type: number
+              example: 400
+          required:
+          - status
+          - message
+      required:
+      - string
+      - error
+  securitySchemes:
+    apiKeyAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: PAK-[RANDOM_KEY]

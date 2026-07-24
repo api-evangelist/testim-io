@@ -1,0 +1,440 @@
+openapi: 3.0.0
+info:
+  description: Testim.io Public API for branches and tests
+  version: 1.0.0
+  title: Testim.io Public Branches Tests API
+  contact:
+    email: support@testim.io
+servers:
+- url: https://api.testim.io
+- url: https://api.eu.testim.io
+security:
+- apiKeyAuth: []
+tags:
+- name: Tests
+  description: List tests by branch, search by test name, and execute tests
+paths:
+  /tests:
+    get:
+      summary: List tests
+      description: List the test names and IDs of a given branch
+      tags:
+      - Tests
+      parameters:
+      - name: branch
+        in: query
+        required: false
+        description: The name of branch to list tests of.
+        example: CMPNY-23_fix_signin_form
+        schema:
+          type: string
+          default: master
+      - name: includeTestStatus
+        in: query
+        required: false
+        description: Include the status of the test
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Test list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tests:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: Test name
+                        _id:
+                          type: string
+                          description: Test ID
+                        labels:
+                          type: string
+                          description: Labels associated with the test
+                  metaData:
+                    $ref: '#/components/schemas/metaData'
+        '400':
+          $ref: '#/components/responses/InvalidOrMissingProperty'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /tests/{testId}:
+    get:
+      summary: Fetch test data by test ID
+      description: Retrieves the details of a specific test by its ID. Optionally, a branch name can be specified as a query parameter to fetch test data from a specific branch.
+      tags:
+      - Tests
+      parameters:
+      - in: path
+        name: testId
+        required: true
+        schema:
+          type: string
+        description: The unique identifier of the test.
+      - in: query
+        name: branch
+        required: false
+        schema:
+          type: string
+          default: master
+        description: The name of the branch to fetch the test information from.
+      responses:
+        '200':
+          description: Successfully retrieved test information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the test.
+                  owner:
+                    type: string
+                    description: The owner of the test.
+                  status:
+                    type: string
+                    description: The current status of the test (e.g., active, draft).
+                  description:
+                    type: string
+                    description: The description of the test.
+                  testId:
+                    type: string
+                    description: The unique identifier of the test.
+                  latestTestResult:
+                    type: object
+                    description: The latest test result of the test.
+                    properties:
+                      resultId:
+                        type: string
+                        description: The resultId of the latest test result.
+                      resultStatus:
+                        type: string
+                        description: The result of the latest test result.
+                      resultDate:
+                        type: string
+                        description: The date of the latest test result.
+                      failureReason:
+                        type: string
+                        description: The failureReason of the latest test result.
+              example:
+                name: Login Test
+                owner: example@example.com
+                status: active
+        '404':
+          description: Test not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Test {testId} does not exist in branch {branch}
+  /tests/{testId}/status:
+    put:
+      summary: Change the test-status
+      description: Change the status (active, draft, evaluating, quarantine) of a test by test ID
+      tags:
+      - Tests
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                branch:
+                  description: The name of the branch on which to update the test
+                  example: feature-234_login_form
+                  default: master
+                  type: string
+                status:
+                  description: The new test-status to set the test to
+                  example: evaluating
+                  type: string
+              required:
+              - status
+      parameters:
+      - in: path
+        name: testId
+        required: true
+        description: The ID of the test to update
+        schema:
+          example: KmgBvUZJvTu83Lox
+          type: string
+      responses:
+        200:
+          description: Test status updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                  metaData:
+                    $ref: '#/components/schemas/metaData'
+        400:
+          $ref: '#/components/responses/InvalidOrMissingProperty'
+        401:
+          $ref: '#/components/responses/InvalidApiKey'
+        403:
+          $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+        429:
+          $ref: '#/components/responses/TooManyRequests'
+  /tests/search:
+    get:
+      summary: Get tests by name
+      description: List the ID and link of tests matching the given name
+      tags:
+      - Tests
+      parameters:
+      - name: name
+        in: query
+        required: true
+        description: The name of test to search.
+        example: test
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Test list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tests:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Test ID
+                        link:
+                          type: string
+                          description: Link to open test in Testim editor
+                  metaData:
+                    $ref: '#/components/schemas/metaData'
+        '400':
+          $ref: '#/components/responses/InvalidOrMissingProperty'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /tests/tms/{testId}/test-cases:
+    get:
+      summary: List all TMS test case IDs
+      description: List IDs of all TMS test cases associated with the specific test for the specific branch (defaults to master)
+      tags:
+      - Tests
+      parameters:
+      - name: branch
+        in: query
+        required: false
+        description: The name of the branch with the specific test for which to list the test IDs.
+        example: CMPNY-23_fix_signin_form
+        schema:
+          type: string
+          default: master
+      - in: path
+        name: testId
+        required: true
+        description: The ID of the test to update
+        schema:
+          example: KmgBvUZJvTu83Lox
+          type: string
+      responses:
+        200:
+          description: List of test case IDs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  testCaseIds:
+                    oneOf:
+                    - type: array
+                      items:
+                        type: integer
+                        example: 1234123
+                    - type: array
+                      items:
+                        type: string
+                        example: Fx34Vc
+                  branch:
+                    type: string
+                    description: The branch on which the query was run on
+                    example: CMPNY-23_fix_signin_form
+                  metaData:
+                    $ref: '#/components/schemas/metaData'
+        400:
+          $ref: '#/components/responses/InvalidOrMissingProperty'
+        401:
+          $ref: '#/components/responses/InvalidApiKey'
+        403:
+          $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+        429:
+          $ref: '#/components/responses/TooManyRequests'
+  /tests/run/{testId}:
+    post:
+      summary: Execute test remotely
+      tags:
+      - Tests
+      requestBody:
+        $ref: '#/components/requestBodies/ExecuteParameters'
+      parameters:
+      - in: path
+        name: testId
+        required: true
+        description: The ID of the test to execute
+        schema:
+          example: TEST_ID
+          type: string
+      responses:
+        '200':
+          description: Execution result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  executionId:
+                    type: string
+                    description: The ID of the new execution
+                  metaData:
+                    $ref: '#/components/schemas/metaData'
+        '400':
+          $ref: '#/components/responses/InvalidOrMissingProperty'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  responses:
+    TooManyRequests:
+      description: Project or API key rate limiting has been reached
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidApiKey:
+      description: 'Issue authenticating request: missing or invalid API Key'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidOrMissingProperty:
+      description: A required property is either missing or it's value is invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ApiKeyInsufficientPermissions:
+      description: API key does not have suffiecient permission to make the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  requestBodies:
+    ExecuteParameters:
+      description: A JSON object containing the execution setup information.<br>Must provide a Grid or Grid ID.<br>Params field size is limited to 67KB.
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              baseUrl:
+                description: An optional URL to use instead of default base URL.
+                example: http://demo.com/
+                type: string
+              branch:
+                description: The name of the branch to execute tests from
+                default: master
+                type: string
+              grid:
+                description: The name of grid to use for execution.
+                type: string
+              parallel:
+                description: The amount of tests to execute concurrently.
+                default: 1
+                type: number
+              params:
+                description: A JSON object (or stringified object) of parameters to add to the execution.
+                anyOf:
+                - type: string
+                - type: object
+                example:
+                  paramName: paramValue
+              resultLabels:
+                description: Labels to append to the execution result
+                type: array
+                items:
+                  type: string
+              retries:
+                description: The amount of retries to allow per test.
+                type: number
+              testConfig:
+                description: The name of test config to use for execution.
+                type: string
+              timeout:
+                description: The amount of seconds before a test will timeout.
+                default: 600
+                type: number
+              turboMode:
+                description: Wether to execute using Turbo Mode or not.
+                default: false
+                type: boolean
+  schemas:
+    requestId:
+      type: string
+      example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
+    metaData:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/requestId'
+      required:
+      - requestId
+    Error:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/requestId'
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            status:
+              type: number
+              example: 400
+          required:
+          - status
+          - message
+      required:
+      - string
+      - error
+  securitySchemes:
+    apiKeyAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: PAK-[RANDOM_KEY]

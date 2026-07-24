@@ -1,0 +1,258 @@
+openapi: 3.0.0
+info:
+  description: Testim.io Public API for branches and tests
+  version: 1.0.0
+  title: Testim.io Public Branches Mobile Applications API
+  contact:
+    email: support@testim.io
+servers:
+- url: https://api.testim.io
+- url: https://api.eu.testim.io
+security:
+- apiKeyAuth: []
+tags:
+- name: Mobile Applications
+paths:
+  /mobile/applications:
+    get:
+      summary: Get All Mobile Applications
+      description: Get a list of all mobile applications related to the project
+      tags:
+      - Mobile Applications
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  applicationId:
+                    type: string
+                  fileSize:
+                    type: number
+                    description: The size of the uploaded file in bytes
+                  status:
+                    $ref: '#/components/schemas/mobileAppStatus'
+                  appMetaData:
+                    $ref: '#/components/schemas/mobileAppMetaData'
+                  metaData:
+                    $ref: '#/components/schemas/metaData'
+        '400':
+          $ref: '#/components/responses/InvalidOrMissingProperty'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    post:
+      summary: Upload a new mobile application
+      description: Upload a new mobile application to the project
+      tags:
+      - Mobile Applications
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  appId:
+                    type: string
+                    description: The id of the uploaded application
+                  metaData:
+                    $ref: '#/components/schemas/metaData'
+        '400':
+          $ref: '#/components/responses/InvalidOrMissingProperty'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /mobile/applications/{applicationId}:
+    get:
+      summary: Get a mobile application
+      description: Get a mobile application from the project
+      tags:
+      - Mobile Applications
+      parameters:
+      - in: path
+        name: applicationId
+        required: true
+        description: The id of the application to get
+        schema:
+          example: APPLICATION_ID
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  applicationId:
+                    type: string
+                  fileSize:
+                    type: number
+                    description: The size of the uploaded file in bytes
+                  status:
+                    $ref: '#/components/schemas/mobileAppStatus'
+                  appMetaData:
+                    $ref: '#/components/schemas/mobileAppMetaData'
+                  metaData:
+                    $ref: '#/components/schemas/metaData'
+        '400':
+          $ref: '#/components/responses/InvalidOrMissingProperty'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+        '404':
+          $ref: '#/components/responses/MobileAppDoesNotExist'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    delete:
+      summary: Delete a mobile application
+      description: Delete a mobile application from the project
+      tags:
+      - Mobile Applications
+      parameters:
+      - in: path
+        name: applicationId
+        required: true
+        description: The id of the application to delete
+        schema:
+          example: APPLICATION_ID
+      responses:
+        '200':
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  metaData:
+                    $ref: '#/components/schemas/metaData'
+        '400':
+          $ref: '#/components/responses/InvalidOrMissingProperty'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+        '404':
+          $ref: '#/components/responses/MobileAppDoesNotExist'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  responses:
+    TooManyRequests:
+      description: Project or API key rate limiting has been reached
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidApiKey:
+      description: 'Issue authenticating request: missing or invalid API Key'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    MobileAppDoesNotExist:
+      description: Specified application ID does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidOrMissingProperty:
+      description: A required property is either missing or it's value is invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ApiKeyInsufficientPermissions:
+      description: API key does not have suffiecient permission to make the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    mobileAppStatus:
+      type: string
+      enum:
+      - valid
+      - invalid
+      - parsing
+    mobileAppMetaData:
+      type: object
+      properties:
+        name:
+          type: string
+          example: My App
+        version:
+          type: string
+          example: 1.0.0
+        id:
+          type: string
+          example: com.myapp
+        activity:
+          type: string
+          example: com.myapp.MainActivity
+        minSdkVersion:
+          type: number
+          example: 21
+        minOsVersion:
+          type: string
+          example: '5.0'
+      required:
+      - name
+      - version
+      - id
+    requestId:
+      type: string
+      example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
+    metaData:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/requestId'
+      required:
+      - requestId
+    Error:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/requestId'
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            status:
+              type: number
+              example: 400
+          required:
+          - status
+          - message
+      required:
+      - string
+      - error
+  securitySchemes:
+    apiKeyAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: PAK-[RANDOM_KEY]

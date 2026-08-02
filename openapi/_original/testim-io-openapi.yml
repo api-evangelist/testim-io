@@ -1,0 +1,1742 @@
+openapi: 3.0.0
+info:
+  description: "Testim.io Public API for branches and tests"
+  version: "1.0.0"
+  title: "Testim.io Public API"
+  contact:
+      email: "support@testim.io"
+servers:
+  - url: 'https://api.testim.io'
+  - url: 'https://api.eu.testim.io'
+paths:
+    /mobile/applications:
+      get:
+        summary: Get All Mobile Applications
+        description: Get a list of all mobile applications related to the project
+        tags:
+          - Mobile Applications
+        responses:
+          '200':
+            description: OK
+            content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      applicationId:
+                        type: string
+                      fileSize:
+                         type: number
+                         description: The size of the uploaded file in bytes
+                      status:
+                        $ref: '#/components/schemas/mobileAppStatus'
+                      appMetaData:
+                        $ref: '#/components/schemas/mobileAppMetaData'
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          '400':
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+
+      post:
+        summary: Upload a new mobile application
+        description: Upload a new mobile application to the project
+        tags:
+          - Mobile Applications
+        requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  file:
+                    type: string
+                    format: binary
+                required:
+                  - file
+        responses:
+            '200':
+              description: Created
+              content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        appId:
+                          type: string
+                          description: The id of the uploaded application
+                        metaData:
+                          $ref: '#/components/schemas/metaData'
+            '400':
+              $ref: '#/components/responses/InvalidOrMissingProperty'
+            '401':
+              $ref: '#/components/responses/InvalidApiKey'
+            '403':
+              $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+            '429':
+              $ref: '#/components/responses/TooManyRequests'
+
+    /mobile/applications/{applicationId}:
+      get:
+        summary: Get a mobile application
+        description: Get a mobile application from the project
+        tags:
+          - Mobile Applications
+        parameters:
+          - in: path
+            name: applicationId
+            required: true
+            description: The id of the application to get
+            schema:
+              example: 'APPLICATION_ID'
+        responses:
+            '200':
+              description: Ok
+              content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        applicationId:
+                          type: string
+                        fileSize:
+                          type: number
+                          description: The size of the uploaded file in bytes
+                        status:
+                          $ref: '#/components/schemas/mobileAppStatus'
+                        appMetaData:
+                          $ref: '#/components/schemas/mobileAppMetaData'
+                        metaData:
+                          $ref: '#/components/schemas/metaData'
+            '400':
+              $ref: '#/components/responses/InvalidOrMissingProperty'
+            '401':
+              $ref: '#/components/responses/InvalidApiKey'
+            '403':
+              $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+            '404':
+              $ref: '#/components/responses/MobileAppDoesNotExist'
+            '429':
+              $ref: '#/components/responses/TooManyRequests'
+
+      delete:
+        summary: Delete a mobile application
+        description: Delete a mobile application from the project
+        tags:
+          - Mobile Applications
+        parameters:
+          - in: path
+            name: applicationId
+            required: true
+            description: The id of the application to delete
+            schema:
+              example: 'APPLICATION_ID'
+        responses:
+            '200':
+              description: Deleted
+              content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        metaData:
+                          $ref: '#/components/schemas/metaData'
+            '400':
+              $ref: '#/components/responses/InvalidOrMissingProperty'
+            '401':
+              $ref: '#/components/responses/InvalidApiKey'
+            '403':
+              $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+            '404':
+              $ref: '#/components/responses/MobileAppDoesNotExist'
+            '429':
+              $ref: '#/components/responses/TooManyRequests'
+
+    /branches:
+      post:
+        summary: Creates a new branch
+        description: Forks source branch into a new branch
+        tags:
+          - Branches
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sourceBranch:
+                    description: The name of the branch to fork
+                    example: master
+                    type: string
+                  newBranch:
+                    description: The name of the new (target) branch
+                    example: feature-234_login_form
+                    type: string
+                required:  
+                  - sourceBranch
+                  - newBranch
+        responses:
+          '200':
+            description: Created
+            content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: The name given in the request's newBranch field
+                      created_at:
+                         $ref: '#/components/schemas/created_at'
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          '400':
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          '409':
+            $ref: '#/components/responses/BranchAlreadyExists'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+
+      get:
+        summary: List branches
+        description: List all project branches
+        tags:
+          - Branches
+        responses:
+          '200':
+            description: List
+            content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      branches:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: Branch name
+                            created_at:
+                              $ref: '#/components/schemas/created_at'
+                            modified_at:
+                              $ref: '#/components/schemas/modified_at'
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+
+    /branches/merge:
+      put:
+        summary: Merge branches
+        description: Merge source into target branch
+        tags:
+          - Branches
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  targetBranch:
+                    description: The name of the branch to merge into
+                    example: feature-234_login_form
+                    type: string
+                  sourceBranch:
+                    description: The name of the branch to merge from
+                    example: master
+                    type: string
+                  forceMerge:
+                    description: Whether to use heuristics to solve conflicts.
+                    type: boolean
+                required:  
+                  - sourceBranch
+                  - targetBranch    
+        responses:
+          '200':
+            description: Merged
+            content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          '400':
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          '404':
+            $ref: '#/components/responses/BranchDoesNotExist'
+          '405':
+            $ref: '#/components/responses/BranchMergeError'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+
+    /branches/{branch}:
+      delete:
+        summary: Delete the given branch
+        tags:
+          - Branches
+        parameters:
+          - in: path
+            name: branch
+            required: true
+            description: The name of the branch to delete
+            schema:
+              example: 'CMPNY-23_fix_signin_form'
+              type: string
+        responses:
+          '200':
+            description: Deleted
+            content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          '400':
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          '404':
+            $ref: '#/components/responses/BranchDoesNotExist'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+
+    /tests:
+      get:
+        summary: List tests
+        description: "List the test names and IDs of a given branch"
+        tags:
+          - Tests
+        parameters:
+        - name: branch
+          in: query
+          required: false
+          description: The name of branch to list tests of.
+          example: 'CMPNY-23_fix_signin_form'
+          schema:
+            type : string
+            default: master
+        - name: includeTestStatus
+          in: query
+          required: false
+          description: Include the status of the test
+          schema:
+            type: boolean
+            default: false
+        responses:
+          '200':
+            description: Test list
+            content:
+              application/json:
+                  schema:
+                    type: object
+                    properties:
+                      tests:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: Test name
+                            _id:
+                              type: string
+                              description: Test ID
+                            labels:
+                              type: string
+                              description: Labels associated with the test
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          '400':
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+    
+    /tests/{testId}:
+      get:
+        summary: Fetch test data by test ID
+        description: Retrieves the details of a specific test by its ID. Optionally, a branch name can be specified as a query parameter to fetch test data from a specific branch.
+        tags: 
+          - Tests
+        parameters:
+          - in: path
+            name: testId
+            required: true
+            schema:
+              type: string
+            description: The unique identifier of the test.
+          - in: query
+            name: branch
+            required: false
+            schema:
+              type: string
+              default: master
+            description: The name of the branch to fetch the test information from.
+        responses:
+          '200':
+            description: Successfully retrieved test information
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the test.
+                    owner:
+                      type: string
+                      description: The owner of the test.
+                    status:
+                      type: string
+                      description: The current status of the test (e.g., active, draft).
+                    description:
+                      type: string
+                      description: The description of the test.
+                    testId:
+                      type: string
+                      description: The unique identifier of the test.
+                    latestTestResult: 
+                      type: object
+                      description: The latest test result of the test.
+                      properties:
+                        resultId:
+                          type: string
+                          description: The resultId of the latest test result.
+                        resultStatus:
+                          type: string
+                          description: The result of the latest test result.
+                        resultDate:
+                          type: string
+                          description: The date of the latest test result.
+                        failureReason:
+                          type: string
+                          description: The failureReason of the latest test result.
+                example:
+                  name: "Login Test"
+                  owner: "example@example.com"
+                  status: "active"
+          '404':
+            description: Test not found
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                  example:
+                    message: "Test {testId} does not exist in branch {branch}"
+    /tests/{testId}/status:
+      put:
+        summary: Change the test-status
+        description: "Change the status (active, draft, evaluating, quarantine) of a test by test ID"
+        tags:
+          - Tests
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  branch:
+                    description: The name of the branch on which to update the test
+                    example: feature-234_login_form
+                    default: master
+                    type: string
+                  status:
+                    description: The new test-status to set the test to
+                    example: evaluating
+                    type: string
+                required:
+                  - status
+        parameters:
+          - in: path
+            name: testId
+            required: true
+            description: The ID of the test to update
+            schema:
+              example: 'KmgBvUZJvTu83Lox'
+              type: string
+        responses:
+          200:
+            description: Test status updated
+            content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      response:
+                        type: string
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          400:
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          401:
+            $ref: '#/components/responses/InvalidApiKey'
+          403:
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          429:
+            $ref: '#/components/responses/TooManyRequests'
+
+    /tests/search:
+      get:
+        summary: Get tests by name
+        description: "List the ID and link of tests matching the given name"
+        tags:
+          - Tests
+        parameters:
+        - name: name
+          in: query
+          required: true
+          description: The name of test to search.
+          example: 'test'
+          schema:
+            type : string
+        responses:
+          '200':
+            description: Test list
+            content:
+              application/json:
+                  schema:
+                    type: object
+                    properties:
+                      tests:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: Test ID
+                            link:
+                              type: string
+                              description: Link to open test in Testim editor
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          '400':
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+
+    /tests/tms/{testId}/test-cases:
+      get:
+        summary: List all TMS test case IDs
+        description: "List IDs of all TMS test cases associated with the specific test for the specific branch (defaults to master)"
+        tags:
+          - Tests
+        parameters:
+        - name: branch
+          in: query
+          required: false
+          description: The name of the branch with the specific test for which to list the test IDs.
+          example: 'CMPNY-23_fix_signin_form'
+          schema:
+            type : string
+            default: master
+        - in: path
+          name: testId
+          required: true
+          description: The ID of the test to update
+          schema:
+            example: 'KmgBvUZJvTu83Lox'
+            type: string
+        responses:
+          200:
+            description: List of test case IDs
+            content:
+              application/json:
+                  schema:
+                    type: object
+                    properties:
+                      testCaseIds:
+                        oneOf:
+                          - type: array
+                            items:
+                              type: integer
+                              example: 1234123
+                          - type: array
+                            items:
+                              type: string
+                              example: "Fx34Vc"
+                      branch:
+                        type: string
+                        description: The branch on which the query was run on 
+                        example: 'CMPNY-23_fix_signin_form'
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          400:
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          401:
+            $ref: '#/components/responses/InvalidApiKey'
+          403:
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          429:
+            $ref: '#/components/responses/TooManyRequests'
+
+    /suites/search:
+      get:
+        summary: Get suites by name
+        description: "List the ID and link of suites matching the given name"
+        tags:
+          - Suites
+        parameters:
+        - name: name
+          in: query
+          required: true
+          description: The name of suites to search.
+          example: 'suite'
+          schema:
+            type : string
+        responses:
+          '200':
+            description: Suite list
+            content:
+              application/json:
+                  schema:
+                    type: object
+                    properties:
+                      suites:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: Suite ID
+                            link:
+                              type: string
+                              description: Link to open suite in Testim editor
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          '400':
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+
+    /test-plans/search:
+      get:
+        summary: Get test-plans by name
+        description: "List the ID and link of test-plans matching the given name"
+        tags:
+          - Test plans
+        parameters:
+        - name: name
+          in: query
+          required: true
+          description: The name of test-plans to search.
+          example: 'plan'
+          schema:
+            type : string
+        responses:
+          '200':
+            description: Test-plan list
+            content:
+              application/json:
+                  schema:
+                    type: object
+                    properties:
+                      testPlans:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: Test-plan ID
+                            link:
+                              type: string
+                              description: Link to open test-plan in Testim editor
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          '400':
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+
+    /runs/executions:
+      get:
+        summary: Get executions results
+        description: Get the list of executions remote runs.
+        tags:
+          - Executions
+        parameters:
+          - in: query
+            name: page
+            required: false
+            description: the page number
+            schema:
+              default: 0
+              example: 0
+              type: number
+          - in: query
+            name: pageSize
+            required: false
+            description: total rows to get on each page.
+            schema:
+              default: 200
+              example: 300
+              type: number
+          - in: query
+            name: fromDate
+            required: false
+            description: filter data from this given date (ISO 8601 format)
+            schema:
+              default: start of today
+              example: '05-01-2020, 2020-05-01 or 2020-05-01T00:00:00'
+              format:  YYYY-MM-DD, MM-DD-YYYY, YYYY-MM-DDTHH:MM:SSZ
+              type: string
+          - in: query
+            name: toDate
+            required: false
+            description: filter date to this date (ISO 8601 format)
+            schema:
+              default: end of today
+              example: '05-01-2020, 2020-05-01 or 2020-05-01T10:00:00'
+              format:  YYYY-MM-DD, MM-DD-YYYY, YYYY-MM-DDTHH:MM:SSZ
+              type: string
+          - in: query
+            name: status
+            required: false
+            description: execution status to filter by.
+            schema:
+              example: passed
+              type: string
+
+          - in: query
+            name: browser
+            required: false
+            description: browser name to filter by.
+            schema:
+              example: chrome
+              type: string
+
+          - in: query
+            name: name
+            description: execution name to filter by.
+            schema:
+              type: string
+
+          - in: query
+            name: resultLabel
+            description: resultLabel or multi resultLabels to filter by.
+            schema:
+              type: array
+              items:
+                type: string
+          - in: query
+            name: branch
+            description: branch name or multi branch names to filter by.
+            schema:
+              example: [master]
+              type: array
+              items:
+                type: string
+          - in: query
+            name: strictNameSearch
+            description: Search execution with strict name match
+            required: false
+            schema: 
+              type: boolean
+              default: false 
+        responses:
+          '200':
+            description: Executions runs result
+            content:
+              application/json:
+                  schema:
+                    type: object
+                    properties:
+                      totalRecords:
+                        type: number
+                        description: total rows
+                        example: 300
+                      page:
+                        type: number
+                        description:  current page index
+                        example: 0
+                      pageSize:
+                       type: number
+                       description: max items on each page
+                       example: 200
+                      executions:
+                        type: array
+                        items:
+                         type: object
+                         properties:
+                          execution:
+                            type: string
+                            description: The name of the execution
+                            example: remote-run
+                          executionId:
+                            type: string
+                            description: The id of the execution
+                            example: OSApM0g8f3FRQnvN
+                          executionResult:
+                            type: string
+                            description: Wether the execution passed or failed
+                            example: Failed
+                          duration:
+                            type: number
+                            description: The amount of time (MS) the execution took
+                          totalTests:
+                            type: number
+                            description: The amount of tests executed
+                            example: 1
+                          failedCount:
+                            type: number
+                            description: The amount of failed tests
+                            example: 1
+                          concurrency:
+                            type: number
+                            description: The amount of tests executed in parallel
+                            example: 1
+                          branch:
+                            type: string
+                            description: The branch of the tests executed
+                            example: master
+                          browser:
+                            type: array
+                            description: The name of the browser the tests were executed in
+                            items:
+                              type: string
+                              example: chrome
+                          startTime:
+                            type: string
+                            description: the state time of the execution
+                            example: 2022-05-10T02:39:54.483Z
+                          turboMode:
+                            type: boolean
+                            description: Wether the execution used Testim's Turbo Mode or not
+                            example: false
+                          success:
+                            type: boolean
+                            description: indication of the execution result
+                            example: false
+                          resultLabels:
+                            type: array
+                            description: hold the result labels as array of string for the execution if exists 
+                            items:
+                              type: string
+                              example: scheduler-run
+                          link:
+                            type: string
+                            description: A link to the execution result in Testim editor
+
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          '400':
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '404':
+            $ref: '#/components/responses/ExecutionDoesNotExist'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+
+
+    /runs/executions/{executionId}:
+      get:
+        summary: Get execution results
+        description: Get the result of an execution, together with its failing tests, with a list of the failed steps of the test
+        tags:
+          - Executions
+        parameters:
+          - in: path
+            name: executionId
+            required: true
+            description: The ID of the execution to get details
+            schema:
+              example: 'EXECUTION_ID'
+              type: string
+        responses:
+          '200':
+            description: Execution result
+            content:
+              application/json:
+                  schema:
+                    type: object
+                    properties:
+                      executionId:
+                        type: string
+                        description: The execution ID
+                      startTime:
+                        type: string
+                        description: Execution start time in ISO 8601 format
+                        example: 2022-05-10T02:39:54.483Z
+                      source:
+                        type: string
+                        description: The method which of execution initiation  
+                        enum: ["cli", "scheduler", "editor", "remote-run", "local"]
+                      branch:
+                        type: string
+                        description: The branch of the tests executed
+                        example: master
+                      execution:
+                        type: string
+                        description: The name of the execution
+                        example: remote-run
+                      concurrency:
+                        type: number
+                        description: The amount of tests executed in parallel
+                        example: 1
+                      executionResult:
+                        type: string
+                        description: Wether the execution passed or failed
+                        example: Failed
+                      browser:
+                        type: string
+                        description: The name of the browser the tests were executed in
+                        example: chrome
+                      failedCount:
+                        type: number
+                        description: The amount of failed tests
+                        example: 1
+                      totalTests:
+                        type: number
+                        description: The amount of tests executed
+                        example: 1
+                      link:
+                        type: string
+                        description: A link to the execution result in Testim editor
+                      turboMode:
+                        type: boolean
+                        description: Wether the execution used Testim's Turbo Mode or not
+                      duration:
+                        type: number
+                        description: The amount of time (MS) the execution took
+                      failedTests:
+                        type: array
+                        description: A list of the failed tests
+                        items:
+                          type: object
+                          properties:
+                            testId:
+                              type: string
+                              description: The test ID
+                            testName:
+                              type: string
+                              description: The name of the failed test
+                            errorMessage:
+                              type: string
+                              description: The error message with test failure reason
+                            executionResult:
+                              type: string
+                              description: Wether the execution passed or failed
+                            link:
+                              type: string
+                              description: A link to the test result in Testim editor
+                            failedSteps:
+                              type: array
+                              description: A list of the failed steps in the test
+                              items:
+                                type: object
+                                properties:
+                                  reason:
+                                    type: string
+                                    description: The reason the step failed
+                                  name:
+                                    type: string
+                                    description: The name of the failing step
+                            failureType:
+                                    type: string
+                                    description: The type of failure the test was tagged with
+                                    enum: ["Bug in app", "Environment Issue", "Invalid test data", "Test design", "New UI change", "Other"]
+                            failureDescription:
+                                    type: string
+                                    description: User supplied description for the particular failure
+                            linkToFailureIssue:
+                                    type: string
+                                    description: User supplied url to the an issue tracker ticket for the particular issue
+                                    example: 'http://demo.jira.com/issue/234234'
+                            baseUrl:
+                                    type: string
+                                    description: The base URL used
+                                    example: 'https://api.testim.io'
+                            startTime:
+                                    type: string
+                                    description: Test execution start time in ISO 8601 format
+                                    example: 2022-05-10T02:39:54.483Z
+                            duration:
+                                    type: string
+                                    description: Time from startTime to the end of the test (in milliseconds)
+                        $ref: '#/components/schemas/metaData'
+          '400':
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '404':
+            $ref: '#/components/responses/ExecutionDoesNotExist'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+
+    /v2/runs/executions/{executionId}:
+      get:
+        summary: Get execution results
+        description: Get all test results in the given execution
+        tags:
+          - Executions
+        parameters:
+          - in: path
+            name: executionId
+            required: true
+            description: The ID of the execution to get details
+            schema:
+              example: 'EXECUTION_ID'
+              type: string
+          - in: query
+            name: page
+            description: the page number
+            schema:
+              default: 0
+              example: 0
+              type: number
+          - in: query
+            name: pageSize
+            description: limit return test
+            schema:
+              default: 200
+              example: 200
+              type: number
+        responses:
+          '200':
+            description: Execution result
+            content:
+              application/json:
+                  schema:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The execution ID
+                      startTime:
+                        type: string
+                        description: Execution start time in ISO 8601 format
+                        example: 2022-05-10T02:39:54.483Z
+                      source:
+                        type: string
+                        description: The method which of execution initiation  
+                        enum: ["cli", "scheduler", "editor", "remote-run", "local"]
+                      branch:
+                        type: string
+                        description: The branch of the tests executed
+                        example: master
+                      execution:
+                        type: string
+                        description: The name of the execution
+                        example: remote-run
+                      concurrency:
+                        type: number
+                        description: The amount of tests executed in parallel
+                        example: 1
+                      executionResult:
+                        type: string
+                        description: Whether the execution passed or failed
+                        example: Failed
+                      browser:
+                        type: string
+                        description: The name of the browser the tests were executed in
+                        example: chrome
+                      failedCount:
+                        type: number
+                        description: The amount of failed tests
+                        example: 1
+                      passedCount:
+                        type: number
+                        description: The amount of passed tests
+                        example: 1
+                      abortedCount:
+                        type: number
+                        description: The amount of aborted tests
+                        example: 1
+                      timedOutTests:
+                        type: number
+                        description: The amount of timed out tests
+                        example: 1
+                      totalTests:
+                        type: number
+                        description: The amount of tests executed
+                        example: 1
+                      link:
+                        type: string
+                        description: A link to the execution result in Testim's editor
+                      turboMode:
+                        type: boolean
+                        description: Whether the execution used Testim's Turbo Mode or not
+                      duration:
+                        type: number
+                        description: The amount of time (MS) the execution took
+                      tests:
+                        type: array
+                        description: A list of the all included tests
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: The test ID
+                            testName:
+                              type: string
+                              description: The name of the test
+                            errorMessage:
+                              type: string
+                              description: The error message with test failure reason
+                            executionStatus:
+                              type: string
+                              description: test status
+                            link:
+                              type: string
+                              description: A link to the test result in Testim editor
+                            failureType:
+                                    type: string
+                                    description: The type of failure the test was tagged with
+                                    enum: ["Bug in app", "Environment Issue", "Invalid test data", "Test design", "New UI change", "Other"]
+                            failureDescription:
+                                    type: string
+                                    description: User supplied description for the particular failure
+                            linkToFailureIssue:
+                                    type: string
+                                    description: User supplied url to the an issue tracker ticket for the particular issue
+                                    example: 'http://demo.jira.com/issue/234234'
+                            baseUrl:
+                                    type: string
+                                    description: The base URL used
+                                    example: 'https://api.testim.io'
+                            startTime:
+                                    type: string
+                                    description: Test execution start time in ISO 8601 format
+                                    example: 2022-05-10T02:39:54.483Z
+                            duration:
+                                    type: string
+                                    description: Time from startTime to the end of the test (in milliseconds)
+                            failedSteps:
+                              type: array
+                              description: A list of the failed steps in the test
+                              items:
+                                type: object
+                                properties:
+                                  reason:
+                                    type: string
+                                    description: The reason the step failed
+                                  name:
+                                    type: string
+                                    description: The name of the failing step
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          '400':
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '404':
+            $ref: '#/components/responses/ExecutionDoesNotExist'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+
+    /runs/tests/{testResultId}:
+      get:
+        summary: Get test result
+        description: Get the result of a test, together with all its steps. 
+                    <br> To see run parameters, specify "runParams=true".
+                    <br> To see steps results, specify "stepsResults=true".
+                    <br>
+                    <br> *Only remote runs are supported
+        tags:
+          - Executions
+        parameters:
+          - in: path
+            name: testResultId
+            required: true
+            description: The ID of the result to get details
+            schema:
+              example: 'RESULT_ID'
+              type: string
+          - in: query
+            name: runParams
+            description: Retrieve the test's run parameters
+            schema:
+              example: false 
+              type: boolean
+          - in: query  
+            name: stepsResults
+            description: Retrieve the test's steps results
+            schema:
+              example: false 
+              type: boolean
+        responses:
+          '200':
+            description: Test result
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    testResult:
+                      type: object
+                      properties:
+                        testId:
+                          type: string
+                          description: The test ID
+                        testName:
+                          type: string
+                          description: The name of the test
+                        link:
+                          type: string
+                          description: Link to open test in Testim editor
+                        branch:
+                          type: string
+                          description: The name of the branch to execute tests from
+                        baseURL:
+                          type: string
+                        configuration:
+                          type: string
+                          description: The test configuration name
+                        executionDate:
+                          type: string
+                          example: '2022-12-31'
+                        executionTime:
+                          type: string
+                          example: '10:59:59'
+                        turboMode: 
+                          type: boolean
+                        testResult:
+                          type: string
+                          description: Could be 'Passed' or 'Failed'
+                          example: Passed
+                        errorMessage:
+                          type: string
+                          description: Test result failure message
+                        runParams:
+                          type: object
+                        duration:
+                          type: number
+                          description: In seconds
+                        testStatus:
+                          type: string
+                          description: e.g Draft, Evaluating, Active, Quarantine
+                        browser:
+                          type: string
+                          example: chrome
+                        owner:
+                          type: string
+                          example: rosie@testim.io
+                          description: The owner user email
+                        stepsResults:
+                          type: array
+                          items: 
+                            type: object
+                            properties:
+                              name: 
+                                type: string
+                              type: 
+                                type: string
+                              treatAsWarning: 
+                                type: boolean
+                              description: 
+                                type: string
+                              sharedStep: 
+                                type: boolean
+                              duration: 
+                                type: string
+                                description: In seconds
+                              status: 
+                                type: string
+                                description: Could be 'Passed' or 'Failed'
+                                example: Passed
+                              errorMessage:
+                                type: string
+                              tabURL: 
+                                type: string
+                              screenshot: 
+                                type: string
+                              screenshots: 
+                                type: object
+                                properties:
+                                  baseline: 
+                                    type: string
+                                  result: 
+                                    type: string
+                                  highlightedBaseline: 
+                                    type: string
+                                  highlightedResult: 
+                                    type: string
+                                  accessibleUntil: 
+                                    type: integer
+                                    example: 1693808555043
+                              path: 
+                                type: array
+                                items: 
+                                  type: string
+                        failureType:
+                                type: string
+                                description: The type of failure the test was tagged with
+                                enum: ["Bug in app", "Environment Issue", "Invalid test data", "Test design", "New UI change", "Other"]
+                        failureDescription:
+                                type: string
+                                description: The type of failure the test was tagged with
+                        linkToFailureIssue:
+                                type: string
+                                description: User supplied url to the an issue tracker ticket for the particular issue
+                                example: 'http://demo.jira.com/issue/234234'
+                        startTime:
+                                type: string
+                                description: Test execution start time in ISO 8601 format
+                                example: 2022-05-10T02:39:54.483Z
+
+                    metaData:
+                      $ref: '#/components/schemas/metaData'
+
+          '400':
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '404':
+            $ref: '#/components/responses/TestResultDoesNotExist'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+
+    /tests/run/{testId}:
+      post:
+        summary: Execute test remotely
+        tags:
+          - Tests
+        requestBody:
+          $ref: '#/components/requestBodies/ExecuteParameters'
+        parameters:
+          - in: path
+            name: testId
+            required: true
+            description: The ID of the test to execute
+            schema:
+              example: 'TEST_ID'
+              type: string
+        responses:
+          '200':
+            description: Execution result
+            content:
+              application/json:
+                  schema:
+                    type: object
+                    properties:
+                      executionId:
+                        type: string
+                        description: The ID of the new execution
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          '400':
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+
+    /suites/run/{suiteId}:
+      post:
+        summary: Execute suites remotely
+        tags:
+          - Suites
+        requestBody:
+          $ref: '#/components/requestBodies/ExecuteParameters'
+        parameters:
+          - in: path
+            name: suiteId
+            required: true
+            description: The ID of the suite to execute
+            schema:
+              example: 'SUITE_ID'
+              type: string
+        responses:
+          '200':
+            description: Execution result
+            content:
+              application/json:
+                  schema:
+                    type: object
+                    properties:
+                      executionId:
+                        type: string
+                        description: The ID of the new execution
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          '400':
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+
+    /labels/run/{label}:
+      post:
+        summary: Execute labels remotely
+        tags:
+          - Labels
+        requestBody:
+          $ref: '#/components/requestBodies/ExecuteParameters'
+        parameters:
+          - in: path
+            name: label
+            required: true
+            description: The name of the label to execute
+            schema:
+              example: 'LABEL'
+              type: string
+        responses:
+          '200':
+            description: Execution result
+            content:
+              application/json:
+                  schema:
+                    type: object
+                    properties:
+                      executionId:
+                        type: string
+                        description: The ID of the new execution
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          '400':
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+
+    /test-plans/run/{planId}:
+      post:
+        summary: Execute test plans remotely
+        tags:
+          - Test plans
+        requestBody:
+          description: A JSON object containing the execution setup information.
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  branch:
+                    description: The name of the branch to execute tests from
+                    default: master
+                    type: string
+                  parallel:
+                    description: The amount of tests to execute concurrently.
+                    default: 1
+                    type: number
+                  params:
+                    description: A JSON object (or stringified object) of parameters to add to the execution.
+                    anyOf:
+                      - type: string
+                      - type: object
+                    example:
+                      paramName: paramValue
+                  resultLabels:
+                    description: Labels to append to the execution result
+                    type: array
+                    items:
+                      type: string
+                  retries:
+                      description: The amount of retries to allow per test.
+                      type: number
+                  timeout:
+                      description: The amount of seconds before a test will timeout.
+                      default: 600
+                      type: number
+                  turboMode:
+                      description: Wether to execute using Turbo Mode or not.
+                      default: false
+                      type: boolean
+                  mode:
+                      $ref: '#/components/schemas/executionMode'
+
+        parameters:
+          - in: path
+            name: planId
+            required: true
+            description: The ID of the test plan to execute
+            schema:
+              example: 'PLAN_ID'
+              type: string
+        responses:
+          '200':
+            description: Execution result
+            content:
+              application/json:
+                  schema:
+                    type: object
+                    properties:
+                      executionId:
+                        type: string
+                        description: The ID of the new execution
+                      metaData:
+                        $ref: '#/components/schemas/metaData'
+          '400':
+            $ref: '#/components/responses/InvalidOrMissingProperty'
+          '401':
+            $ref: '#/components/responses/InvalidApiKey'
+          '403':
+            $ref: '#/components/responses/ApiKeyInsufficientPermissions'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+    
+tags:
+  - name: Branches
+    description: List, create, delete and merge branches
+  - name: Tests
+    description: List tests by branch, search by test name, and execute tests
+  - name: Test plans
+    description: Search test plans by name, and execute test plans
+  - name: Suites
+    description: Search suites by name, and execute suites
+  - name: Labels
+    description: Execute labels
+  - name: Executions
+    description: Get execution results
+
+security:
+  - apiKeyAuth: []
+
+components:
+  requestBodies:
+    ExecuteParameters:
+      description: A JSON object containing the execution setup information.<br>Must provide a Grid or Grid ID.<br>Params field size is limited to 67KB.
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              baseUrl:
+                description: An optional URL to use instead of default base URL.
+                example: http://demo.com/
+                type: string
+              branch:
+                description: The name of the branch to execute tests from
+                default: master
+                type: string
+              grid:
+                description: The name of grid to use for execution.
+                type: string
+              parallel:
+                description: The amount of tests to execute concurrently.
+                default: 1
+                type: number
+              params:
+                description: A JSON object (or stringified object) of parameters to add to the execution.
+                anyOf:
+                  - type: string
+                  - type: object
+                example:
+                  paramName: paramValue
+              resultLabels:
+                description: Labels to append to the execution result
+                type: array
+                items:
+                  type: string
+              retries:
+                  description: The amount of retries to allow per test.
+                  type: number
+              testConfig:
+                description: The name of test config to use for execution.
+                type: string
+              timeout:
+                  description: The amount of seconds before a test will timeout.
+                  default: 600
+                  type: number
+              turboMode:
+                  description: Wether to execute using Turbo Mode or not.
+                  default: false
+                  type: boolean
+  responses:
+    # Errors
+    BranchAlreadyExists:
+      description: A resource with that name already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidOrMissingProperty:
+      description: A required property is either missing or it's value is invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BranchDoesNotExist:
+      description: Specified branch does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BranchMergeError:
+      description: Merge failed due to conflicts (forceMerge disabled)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidApiKey:
+      description: 'Issue authenticating request: missing or invalid API Key'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ApiKeyInsufficientPermissions:
+      description: 'API key does not have suffiecient permission to make the request'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 'Project or API key rate limiting has been reached'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ExecutionDoesNotExist:
+      description: Specified execution ID does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    MobileAppDoesNotExist:
+      description: Specified application ID does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TestResultDoesNotExist:
+      description: Specified test result ID does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    # requestId attached to all requests and responses
+    requestId:
+      type: string
+      example: 'RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e'
+    # A root level object returned with all success responses
+    mobileAppMetaData:
+      type: object
+      properties:
+        name:
+              type: string
+              example: "My App"
+        version:
+              type: string
+              example: "1.0.0"
+        id:
+              type: string
+              example: "com.myapp"
+        activity:
+              type: string
+              example: "com.myapp.MainActivity"
+        minSdkVersion:
+              type: number
+              example: 21
+        minOsVersion:
+              type: string
+              example: "5.0"
+      required:
+        - name
+        - version
+        - id
+    mobileAppStatus:
+      type: string
+      enum: ["valid", "invalid", "parsing"]
+    # A root level object returned with all success responses
+    metaData:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/requestId'
+      required:
+        - requestId
+    # Date resource was created at
+    created_at:
+      type: string
+      example: "2020-10-13T16:52:47.571Z"
+    # Date resource was modified at
+    modified_at:
+      type: string
+      example: "2020-10-19T17:43:51.997Z"
+    executionMode:
+      type: string
+      enum: ["extension", "selenium"]
+    # Schema for error response body
+    Error:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/requestId'
+        error:
+          type: object
+          properties:
+            message:
+                type: string
+            status:
+                type: number
+                example: 400
+          required: 
+            - status
+            - message
+      required: 
+        - string
+        - error
+  
+  securitySchemes:
+      apiKeyAuth:
+        type: http
+        scheme: bearer
+        bearerFormat: PAK-[RANDOM_KEY]

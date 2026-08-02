@@ -1,0 +1,50 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/testim-io-openapi.yml + https://docs.tricentis.com/testim/content/administration/api-access.htm
+description: >-
+  Conformance assertions for the Testim.io Public API against common
+  cross-cutting API standards. Derived from the OpenAPI spec and confirmed
+  against the published API-access docs.
+standards:
+- id: oauth2
+  conforms: false
+  evidence: >-
+    Auth is a static Bearer key (Authorization: Bearer PAK-<key>), not OAuth 2.0.
+- id: oidc
+  conforms: false
+  evidence: No OpenID Connect discovery or ID tokens; static API-key auth only.
+- id: rfc9457
+  conforms: false
+  evidence: >-
+    Errors use a custom JSON envelope {requestId, error:{message,status}} with
+    application/json, not application/problem+json.
+- id: pagination
+  conforms: true
+  evidence: >-
+    GET /runs/executions and GET /v2/runs/executions/{executionId} support
+    page + pageSize query params and return totalRecords/page/pageSize.
+- id: idempotency
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header is defined; write operations (POST/PUT/DELETE) are
+    not idempotency-key protected.
+- id: rate_limiting
+  conforms: true
+  evidence: >-
+    Every operation declares a 429 TooManyRequests response; limits apply per
+    project and per API key.
+- id: fhir
+  conforms: false
+  evidence: Not a healthcare API.
+- id: fapi
+  conforms: false
+  evidence: Not a financial-grade API.
+- id: scim
+  conforms: false
+  evidence: No SCIM user/group provisioning endpoints.
+- id: odata
+  conforms: false
+  evidence: No OData query conventions.
+- id: json_api
+  conforms: false
+  evidence: Plain JSON responses; not JSON:API document structure.

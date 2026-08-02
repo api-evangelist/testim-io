@@ -1,0 +1,76 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/testim-io-openapi.yml
+status: candidate
+description: >-
+  No official hosted/remote Model Context Protocol (MCP) server was found for
+  Testim (Tricentis) as of this pass. This is a CANDIDATE tool surface derived
+  1:1 from the public REST API operations, showing what an MCP server for Testim
+  would expose. Not an endorsement of an existing server.
+server:
+  official: false
+  hosted_url: null
+  transport: null
+tools:
+- name: list_branches
+  op: GET /branches
+  description: List all project branches.
+- name: create_branch
+  op: POST /branches
+  description: Fork a source branch into a new branch.
+- name: merge_branches
+  op: PUT /branches/merge
+  description: Merge a source branch into a target branch.
+- name: delete_branch
+  op: DELETE /branches/{branch}
+  description: Delete a branch by name.
+- name: list_tests
+  op: GET /tests
+  description: List test names and IDs for a branch.
+- name: get_test
+  op: GET /tests/{testId}
+  description: Fetch a test's details by ID.
+- name: search_tests
+  op: GET /tests/search
+  description: Find test IDs and editor links by name.
+- name: set_test_status
+  op: PUT /tests/{testId}/status
+  description: Change a test's status (active/draft/evaluating/quarantine).
+- name: search_suites
+  op: GET /suites/search
+  description: Find suite IDs and links by name.
+- name: search_test_plans
+  op: GET /test-plans/search
+  description: Find test-plan IDs and links by name.
+- name: run_test
+  op: POST /tests/run/{testId}
+  description: Execute a test remotely; returns an executionId.
+- name: run_suite
+  op: POST /suites/run/{suiteId}
+  description: Execute a suite remotely; returns an executionId.
+- name: run_label
+  op: POST /labels/run/{label}
+  description: Execute all tests with a label; returns an executionId.
+- name: run_test_plan
+  op: POST /test-plans/run/{planId}
+  description: Execute a test plan remotely; returns an executionId.
+- name: list_executions
+  op: GET /runs/executions
+  description: List execution results with date/status/branch filters (paginated).
+- name: get_execution
+  op: GET /v2/runs/executions/{executionId}
+  description: Get all test results within an execution.
+- name: get_test_result
+  op: GET /runs/tests/{testResultId}
+  description: Get a single test result with step details and screenshots.
+- name: list_mobile_apps
+  op: GET /mobile/applications
+  description: List uploaded mobile applications.
+- name: upload_mobile_app
+  op: POST /mobile/applications
+  description: Upload a new mobile application binary.
+- name: delete_mobile_app
+  op: DELETE /mobile/applications/{applicationId}
+  description: Delete a mobile application.
+auth:
+  scheme: 'Bearer API key (Authorization: Bearer PAK-<key>)'

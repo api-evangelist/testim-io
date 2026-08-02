@@ -1,0 +1,26 @@
+{
+  "provider": "testim-io",
+  "sources": [
+    "testim-io-branches-api-openapi.yml",
+    "testim-io-executions-api-openapi.yml",
+    "testim-io-labels-api-openapi.yml",
+    "testim-io-mobile-applications-api-openapi.yml",
+    "testim-io-suites-api-openapi.yml",
+    "testim-io-test-plans-api-openapi.yml",
+    "testim-io-tests-api-openapi.yml"
+  ],
+  "outputs": [
+    "testim-io-branches-api-openapi.yml",
+    "testim-io-executions-api-openapi.yml",
+    "testim-io-labels-api-openapi.yml",
+    "testim-io-mobile-applications-api-openapi.yml",
+    "testim-io-suites-api-openapi.yml",
+    "testim-io-test-plans-api-openapi.yml",
+    "testim-io-tests-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://status.tricentis.com/ + https://help.testim.io/changelog +
+  openapi/testim-io-openapi.yml
+description: >-
+  Lifecycle posture for the Testim.io Public API: versioning, status page,
+  changelog, and support. Testim is a Tricentis product; operational status and
+  security run through Tricentis surfaces.
+versioning:
+  style: path-prefixed
+  current_version: '1.0.0'
+  evidence: >-
+    OpenAPI info.version 1.0.0; a /v2 execution-read path
+    (/v2/runs/executions/{executionId}) runs alongside the unversioned v1 path.
+deprecation:
+  policy_published: false
+  sunset_header: false
+  note: >-
+    No formal deprecation/sunset policy or RFC 8594 Sunset/Deprecation headers
+    were found for the public REST API. The older /runs/executions/{id} read
+    coexists with the newer /v2 variant rather than being formally deprecated.
+status_page:
+  url: https://status.tricentis.com/
+  provider: Tricentis (shared status page; Testim listed as a component, e.g.
+    "Tricentis US-WEST-2 | Testim")
+changelog:
+  url: https://help.testim.io/changelog
+  cadence: dated, ongoing product changelog
+  detail: changelog/testim-io-changelog.yml
+support:
+  contact_email: support@testim.io
+  docs: https://docs.tricentis.com/testim/

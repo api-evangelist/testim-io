@@ -1,0 +1,23 @@
+generated: '2026-07-21'
+method: searched
+source: https://help.testim.io/changelog
+description: >-
+  Testim maintains a dated, ongoing product changelog covering the app and the
+  public REST API. Exact per-entry dates are gated behind bot protection on the
+  changelog host; the entries below are titles surfaced publicly. No dates are
+  fabricated.
+scheme: dated changelog (reverse-chronological, ongoing)
+url: https://help.testim.io/changelog
+entries:
+- title: Public REST API for application management
+  area: Public REST API
+  highlight: >-
+    Added public REST endpoints to upload, list, fetch and delete mobile
+    applications (/mobile/applications).
+- title: API Step Enhancements
+  area: Test authoring
+  highlight: Enhancements to the in-test API step for API testing within flows.
+notes: >-
+  A ChangeLog docs URL and this artifact pointer coexist. Entry list is a recent
+  window sampled from the public changelog index; dates omitted rather than
+  guessed.

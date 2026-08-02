@@ -1,0 +1,57 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/testim-io-openapi.yml
+description: >-
+  Error catalog for the Testim.io Public API, derived from the reusable error
+  responses declared in the OpenAPI spec. Testim does NOT use RFC 9457
+  application/problem+json; it returns a custom JSON envelope.
+format: custom
+envelope:
+  media_type: application/json
+  shape:
+    requestId: Correlation ID echoed on every request and response (RQ-...)
+    error:
+      message: Human-readable error message
+      status: Numeric HTTP status code (e.g. 400)
+problem_types:
+- key: InvalidOrMissingProperty
+  http_status: 400
+  title: A required property is either missing or its value is invalid
+  remediation: Check required request-body/query fields and value formats.
+- key: InvalidApiKey
+  http_status: 401
+  title: 'Issue authenticating request: missing or invalid API Key'
+  remediation: >-
+    Send Authorization: Bearer PAK-<key>. Generate/rotate keys in Settings > API.
+- key: ApiKeyInsufficientPermissions
+  http_status: 403
+  title: API key does not have sufficient permission to make the request
+  remediation: Use a key whose role/permissions cover the requested operation.
+- key: BranchDoesNotExist
+  http_status: 404
+  title: Specified branch does not exist
+  remediation: List branches (GET /branches) to confirm the branch name.
+- key: MobileAppDoesNotExist
+  http_status: 404
+  title: Specified application ID does not exist
+  remediation: Confirm the applicationId via GET /mobile/applications.
+- key: ExecutionDoesNotExist
+  http_status: 404
+  title: Specified execution ID does not exist
+  remediation: Confirm the executionId via GET /runs/executions.
+- key: TestResultDoesNotExist
+  http_status: 404
+  title: Specified test result ID does not exist
+  remediation: Confirm the testResultId from an execution's test results.
+- key: BranchMergeError
+  http_status: 405
+  title: Merge failed due to conflicts (forceMerge disabled)
+  remediation: Retry PUT /branches/merge with forceMerge=true to auto-resolve.
+- key: BranchAlreadyExists
+  http_status: 409
+  title: A resource with that name already exists
+  remediation: Choose a new branch name or delete the existing branch first.
+- key: TooManyRequests
+  http_status: 429
+  title: Project or API key rate limiting has been reached
+  remediation: Back off and retry; rate limits apply per project and per API key.

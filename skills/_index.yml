@@ -1,0 +1,18 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/testim-io-openapi.yml
+description: >-
+  Packaged Agent Skills for the Testim.io Public API, one per marquee flow,
+  grounded in real REST operations from the published OpenAPI spec.
+api: Testim.io Public API
+base_url: https://api.testim.io
+skills:
+- name: testim-io-run-and-read-tests
+  file: testim-io-run-and-read-tests.md
+  description: Trigger a test/suite/label/plan remotely and read execution results.
+- name: testim-io-manage-branches
+  file: testim-io-manage-branches.md
+  description: Fork, list, merge, and delete Testim branches.
+- name: testim-io-manage-mobile-apps
+  file: testim-io-manage-mobile-apps.md
+  description: Upload, list, fetch, and delete mobile application binaries.

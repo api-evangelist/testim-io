@@ -1,0 +1,45 @@
+generated: '2026-07-21'
+method: probed
+source: live HTTP probes of Testim hosts
+description: >-
+  Probed standard /.well-known/ paths across Testim hosts. None returned a 200;
+  the API host answers 401 (auth required) even for well-known paths, the
+  marketing host returns 404, and the help host refused the connection. No
+  well-known documents were saved. Absence is a valid, expected result.
+probes:
+- host: https://api.testim.io
+  path: /.well-known/security.txt
+  status: 401
+  file: null
+- host: https://api.testim.io
+  path: /.well-known/openid-configuration
+  status: 401
+  file: null
+- host: https://api.testim.io
+  path: /.well-known/oauth-authorization-server
+  status: 401
+  file: null
+- host: https://api.testim.io
+  path: /.well-known/api-catalog
+  status: 401
+  file: null
+- host: https://www.testim.io
+  path: /.well-known/security.txt
+  status: 404
+  file: null
+- host: https://www.testim.io
+  path: /.well-known/openid-configuration
+  status: 404
+  file: null
+- host: https://www.testim.io
+  path: /.well-known/oauth-authorization-server
+  status: 404
+  file: null
+- host: https://www.testim.io
+  path: /.well-known/api-catalog
+  status: 404
+  file: null
+- host: https://help.testim.io
+  path: /.well-known/security.txt
+  status: 000
+  file: null

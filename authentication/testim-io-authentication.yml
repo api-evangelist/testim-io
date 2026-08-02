@@ -1,0 +1,18 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.tricentis.com/testim/content/administration/api-access.htm
+docs: https://docs.tricentis.com/testim/content/administration/api-access.htm
+summary:
+  types:
+  - http
+schemes:
+- name: apiKeyAuth
+  type: http
+  scheme: bearer
+  bearerFormat: PAK-[RANDOM_KEY]
+  header: 'Authorization: Bearer PAK-<key>'
+  key_management: Generate/revoke keys in the Testim app under Settings > API.
+  plan_requirement: The public REST API requires a Professional (Pro) tier project.
+  sources:
+  - openapi/testim-io-openapi.yml
+  - https://docs.tricentis.com/testim/content/administration/api-access.htm

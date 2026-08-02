@@ -1,0 +1,73 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/testim-io-openapi.yml
+description: >-
+  Entity-relationship model for the Testim.io Public API, derived from the
+  OpenAPI paths, path parameters, and id-reference fields. Testim organizes
+  automated UI/mobile tests under branches and executes them into results.
+entities:
+- name: Branch
+  id_field: name
+  key_fields: [name, created_at, modified_at]
+  description: A named fork of test assets (default 'master'); scopes tests.
+- name: Test
+  id_field: _id / testId
+  key_fields: [name, _id, status, owner, labels, latestTestResult]
+  description: An automated test; has a status (active/draft/evaluating/quarantine).
+- name: Suite
+  id_field: id
+  key_fields: [id, link]
+  description: A named collection of tests, executable as a unit.
+- name: TestPlan
+  id_field: id
+  key_fields: [id, link]
+  description: A named plan grouping tests/suites for scheduled/CI execution.
+- name: Label
+  id_field: label
+  key_fields: [label]
+  description: A tag applied to tests; executable to run all labeled tests.
+- name: MobileApplication
+  id_field: applicationId / appId
+  key_fields: [applicationId, fileSize, status, appMetaData]
+  description: An uploaded mobile app binary tested against.
+- name: Execution
+  id_field: executionId
+  key_fields: [executionId, execution, executionResult, branch, browser, startTime, totalTests]
+  description: A remote run of a test/suite/label/plan producing test results.
+- name: TestResult
+  id_field: testResultId / resultId
+  key_fields: [testId, testName, testResult, branch, stepsResults, executionDate]
+  description: The result of a single test within an execution, with step details.
+relationships:
+- from: Test
+  to: Branch
+  type: belongs_to
+  via: branch (query/body param; default master)
+- from: Suite
+  to: Test
+  type: has_many
+  via: suite membership
+- from: TestPlan
+  to: Suite
+  type: has_many
+  via: plan membership
+- from: Execution
+  to: Branch
+  type: belongs_to
+  via: branch
+- from: Execution
+  to: TestResult
+  type: has_many
+  via: failedTests[] / tests[] (v2) / testResultId
+- from: TestResult
+  to: Test
+  type: belongs_to
+  via: testId
+- from: Execution
+  to: Test
+  type: has_many
+  via: totalTests / tests[]
+notes: >-
+  IDs are opaque short strings (e.g. test IDs like 'KmgBvUZJvTu83Lox'); no
+  documented type-prefix scheme. Every response also carries metaData.requestId
+  for tracing (see conventions/).

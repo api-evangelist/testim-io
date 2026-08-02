@@ -1,0 +1,68 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://docs.tricentis.com/testim/content/administration/api-access.htm +
+  openapi/testim-io-openapi.yml
+description: >-
+  Cross-cutting request/response conventions for the Testim.io Public API that
+  apply across every operation: authentication, request tracing, pagination,
+  versioning, the error envelope, and rate-limit signaling.
+base_url: https://api.testim.io
+regional_hosts:
+  us: https://api.testim.io
+  eu: https://api.eu.testim.io
+api_style: REST over HTTPS, JSON responses (multipart/form-data for app upload)
+plan_requirement: The public REST API requires a Professional (Pro) tier project.
+
+authentication:
+  scheme: Bearer API key
+  header: 'Authorization: Bearer PAK-<key>'
+  key_format: PAK-[RANDOM_KEY]
+  management: Generate/revoke keys in the Testim app under Settings > API.
+  docs: https://docs.tricentis.com/testim/content/administration/api-access.htm
+  detail: authentication/testim-io-authentication.yml
+
+idempotency:
+  supported: false
+  note: >-
+    No Idempotency-Key header is defined. GET/HEAD are inherently idempotent;
+    branch/test writes are not protected by an idempotency key.
+
+request_tracing:
+  supported: true
+  mechanism: >-
+    Every response carries metaData.requestId (e.g.
+    RQ-HykKrXuMxrp47BRbdWWO-41ed477e-...). Errors echo the same requestId at the
+    envelope root for correlation with support.
+
+pagination:
+  style: page-number
+  applies_to:
+  - GET /runs/executions
+  - GET /v2/runs/executions/{executionId}
+  request_params:
+    page: zero-based page index (default 0)
+    pageSize: rows per page (default 200)
+  response_fields:
+    totalRecords: total matching rows
+    page: current page index
+    pageSize: max items per page
+
+versioning:
+  style: path-prefixed
+  detail: >-
+    Unversioned paths coexist with a /v2 revision for execution reads
+    (/runs/executions/{id} and /v2/runs/executions/{id}). OpenAPI info.version
+    is 1.0.0.
+  detail_ref: lifecycle/testim-io-lifecycle.yml
+
+error_envelope:
+  media_type: application/json
+  shape: '{ requestId, error: { message, status } }'
+  standard: custom (NOT RFC 9457 problem+json)
+  detail: errors/testim-io-problem-types.yml
+
+rate_limiting:
+  signaled_by: HTTP 429 (TooManyRequests)
+  scope: Per project and per API key.
+  detail: errors/testim-io-problem-types.yml

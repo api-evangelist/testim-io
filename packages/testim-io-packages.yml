@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: searched
+source: https://www.npmjs.com/package/@testim/testim-cli
+description: >-
+  First-party client tooling for Testim (a Tricentis product). The published,
+  officially-maintained package is the Testim CLI on npm, used to run tests,
+  suites, labels and test plans from CI/CD and the command line.
+packages:
+- name: '@testim/testim-cli'
+  registry: npm
+  official: true
+  url: https://www.npmjs.com/package/@testim/testim-cli
+  install: npm install -g @testim/testim-cli
+  language: javascript
+  runtime: Node.js (all LTS/supported versions)
+  first_published: '2015-09-17'
+  description: >-
+    The Testim command line interface. Runs Testim tests/suites/labels/test-plans
+    against Testim Grid or a self-hosted grid from CI/CD, and streams results.
+    Authenticated with a project token + project ID from Settings > CLI.
+notes: >-
+  No first-party SDK libraries were found on PyPI, Maven Central, NuGet,
+  pkg.go.dev, RubyGems, Packagist or crates.io for the Testim public REST API;
+  the REST API is consumed directly over HTTPS with a Bearer PAK- key. The CLI
+  above is the sole first-party published package.

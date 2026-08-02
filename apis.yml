@@ -1,8 +1,28 @@
 aid: testim-io
 name: Testim Io
-description: Testim Io is a company surfaced as a portfolio company of lightspeed-venture-partners and
-  added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment
-  pipeline.
+description: >-
+  Testim is an AI-powered functional test automation platform for web and mobile
+  applications, using machine learning to author, run, and self-heal UI tests.
+  Acquired by Tricentis in 2022, Testim is offered as part of the Tricentis
+  quality-engineering portfolio. It exposes a public REST API (api.testim.io,
+  with an EU host at api.eu.testim.io) and an official npm CLI
+  (@testim/testim-cli) so teams can manage test branches; look up and execute
+  tests, suites, labels and test plans from CI/CD; read execution and step-level
+  results; and manage mobile application binaries. Testim was backed by
+  Lightspeed Venture Partners prior to acquisition.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://github.com/testimio.png
 url: https://raw.githubusercontent.com/api-evangelist/testim-io/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -12,12 +32,171 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
+- API Testing
+- Test Automation
+- Quality Assurance
+- CI/CD
+- Mobile Testing
+- Software Testing
+- DevOps
 - Company
-apis: []
+apis:
+- aid: testim-io:testim-io-branches-api
+  name: Testim Io Branches API
+  description: List, create, delete and merge branches
+  humanURL: https://docs.tricentis.com/testim/content/administration/api-access.htm
+  baseURL: https://api.testim.io
+  tags:
+  - Branches
+  properties:
+  - type: OpenAPI
+    url: openapi/testim-io-branches-api-openapi.yml
+  - type: Documentation
+    url: https://docs.tricentis.com/testim/content/administration/api-access.htm
+  - type: APIReference
+    url: https://raw.githubusercontent.com/testimio/public-openapi/main/api.yaml
+- aid: testim-io:testim-io-executions-api
+  name: Testim Io Executions API
+  description: Get execution results
+  humanURL: https://docs.tricentis.com/testim/content/administration/api-access.htm
+  baseURL: https://api.testim.io
+  tags:
+  - Executions
+  properties:
+  - type: OpenAPI
+    url: openapi/testim-io-executions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.tricentis.com/testim/content/administration/api-access.htm
+  - type: APIReference
+    url: https://raw.githubusercontent.com/testimio/public-openapi/main/api.yaml
+- aid: testim-io:testim-io-labels-api
+  name: Testim Io Labels API
+  description: Execute labels
+  humanURL: https://docs.tricentis.com/testim/content/administration/api-access.htm
+  baseURL: https://api.testim.io
+  tags:
+  - Labels
+  properties:
+  - type: OpenAPI
+    url: openapi/testim-io-labels-api-openapi.yml
+  - type: Documentation
+    url: https://docs.tricentis.com/testim/content/administration/api-access.htm
+  - type: APIReference
+    url: https://raw.githubusercontent.com/testimio/public-openapi/main/api.yaml
+- aid: testim-io:testim-io-mobile-applications-api
+  name: Testim Io Mobile Applications API
+  description: The Mobile Applications API from Testim Io — 2 operation(s) for mobile applications.
+  humanURL: https://docs.tricentis.com/testim/content/administration/api-access.htm
+  baseURL: https://api.testim.io
+  tags:
+  - Mobile Applications
+  properties:
+  - type: OpenAPI
+    url: openapi/testim-io-mobile-applications-api-openapi.yml
+  - type: Documentation
+    url: https://docs.tricentis.com/testim/content/administration/api-access.htm
+  - type: APIReference
+    url: https://raw.githubusercontent.com/testimio/public-openapi/main/api.yaml
+- aid: testim-io:testim-io-suites-api
+  name: Testim Io Suites API
+  description: Search suites by name, and execute suites
+  humanURL: https://docs.tricentis.com/testim/content/administration/api-access.htm
+  baseURL: https://api.testim.io
+  tags:
+  - Suites
+  properties:
+  - type: OpenAPI
+    url: openapi/testim-io-suites-api-openapi.yml
+  - type: Documentation
+    url: https://docs.tricentis.com/testim/content/administration/api-access.htm
+  - type: APIReference
+    url: https://raw.githubusercontent.com/testimio/public-openapi/main/api.yaml
+- aid: testim-io:testim-io-test-plans-api
+  name: Testim Io Test plans API
+  description: Search test plans by name, and execute test plans
+  humanURL: https://docs.tricentis.com/testim/content/administration/api-access.htm
+  baseURL: https://api.testim.io
+  tags:
+  - Test plans
+  properties:
+  - type: OpenAPI
+    url: openapi/testim-io-test-plans-api-openapi.yml
+  - type: Documentation
+    url: https://docs.tricentis.com/testim/content/administration/api-access.htm
+  - type: APIReference
+    url: https://raw.githubusercontent.com/testimio/public-openapi/main/api.yaml
+- aid: testim-io:testim-io-tests-api
+  name: Testim Io Tests API
+  description: List tests by branch, search by test name, and execute tests
+  humanURL: https://docs.tricentis.com/testim/content/administration/api-access.htm
+  baseURL: https://api.testim.io
+  tags:
+  - Tests
+  properties:
+  - type: OpenAPI
+    url: openapi/testim-io-tests-api-openapi.yml
+  - type: Documentation
+    url: https://docs.tricentis.com/testim/content/administration/api-access.htm
+  - type: APIReference
+    url: https://raw.githubusercontent.com/testimio/public-openapi/main/api.yaml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+- type: DomainSecurity
+  url: security/testim-io-domain-security.yml
+- type: Authentication
+  url: authentication/testim-io-authentication.yml
+- type: DeveloperPortal
+  url: https://docs.tricentis.com/testim/
+- type: Documentation
+  url: https://docs.tricentis.com/testim/content/administration/api-access.htm
+- type: APIReference
+  url: https://raw.githubusercontent.com/testimio/public-openapi/main/api.yaml
+- type: GettingStarted
+  url: https://help.testim.io/docs/api-access
+- type: GitHubOrganization
+  url: https://github.com/testimio
+- type: Blog
+  url: https://www.testim.io/blog/
+- type: StatusPage
+  url: https://status.tricentis.com/
+- type: ChangeLog
+  url: https://help.testim.io/changelog
+- type: Packages
+  url: packages/testim-io-packages.yml
+- type: SDKs
+  url: packages/testim-io-packages.yml
+- type: CLI
+  url: cli/testim-io-cli.yml
+- type: MCPServer
+  url: mcp/testim-io-mcp.yml
+- type: LLMsTxt
+  url: llms/testim-io-llms.txt
+- type: Conventions
+  url: conventions/testim-io-conventions.yml
+- type: ErrorCatalog
+  url: errors/testim-io-problem-types.yml
+- type: Conformance
+  url: conformance/testim-io-conformance.yml
+- type: Lifecycle
+  url: lifecycle/testim-io-lifecycle.yml
+- type: ChangeLog
+  url: changelog/testim-io-changelog.yml
+- type: DataModel
+  url: data-model/testim-io-data-model.yml
+- type: TrustCenter
+  url: security/testim-io-trust-center.yml
+- type: Compliance
+  url: security/testim-io-trust-center.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 20
+  pass: local-v1

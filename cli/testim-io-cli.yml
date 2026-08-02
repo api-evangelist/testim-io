@@ -1,0 +1,43 @@
+generated: '2026-07-21'
+method: searched
+source: https://help.testim.io/docs/the-command-line-cli
+description: >-
+  The Testim CLI (@testim/testim-cli) runs Testim tests, suites, labels and
+  test plans from CI/CD pipelines and the terminal, and is the primary
+  automation surface alongside the public REST API.
+binary: testim
+package: '@testim/testim-cli'
+docs:
+- https://help.testim.io/docs/the-command-line-cli
+- https://docs.tricentis.com/testim/content/ci-cd-integrations/the-command-line-cli.htm
+install:
+- method: npm (global)
+  command: npm install -g @testim/testim-cli
+- method: npm (project)
+  command: npm i @testim/testim-cli
+requirements:
+  node: All LTS / supported Node.js versions
+auth:
+  description: >-
+    Authenticated with a project Token and Project ID, both found in the Testim
+    app under Settings > CLI. Passed as --token and --project flags (or env vars).
+command_surface:
+- group: run
+  purpose: Execute tests/suites/labels/test-plans on a grid
+  key_flags:
+  - '--token: project CLI token'
+  - '--project: project ID'
+  - '--grid: grid name (e.g. Testim-Grid)'
+  - '--suite / --label / --test-plan / --test-id: selection'
+  - '--branch: branch to run from (default master)'
+  - '--parallel: concurrent test count'
+  - '--base-url: override the app base URL'
+  - '--result-label: tag the execution result'
+  - '--report-file / --result-format: CI reporting output (JUnit XML, etc.)'
+- group: extension development
+  purpose: Author and validate custom CLI actions and validations
+notes: >-
+  The CLI complements the REST API: the CLI drives execution from CI, while the
+  REST API manages branches, looks up test/suite/plan IDs, triggers runs and
+  reads execution/test results. Binary is distributed via the npm package listed
+  in packages/testim-io-packages.yml.

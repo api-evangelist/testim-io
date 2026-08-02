@@ -1,0 +1,46 @@
+# generated: '2026-07-21'
+# method: generated
+# source: openapi/testim-io-openapi.yml (API Evangelist enrichment enhancements)
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay for the Testim.io Public API
+  version: 1.0.0
+extends: ../openapi/testim-io-openapi.yml
+actions:
+- target: $.info
+  description: Add API Evangelist enrichment metadata and canonical support links.
+  update:
+    x-api-evangelist:
+      enriched: '2026-07-21'
+      docs: https://docs.tricentis.com/testim/content/administration/api-access.htm
+      spec_source: https://raw.githubusercontent.com/testimio/public-openapi/main/api.yaml
+      plan_requirement: Professional (Pro) tier project required.
+      status_page: https://status.tricentis.com/
+      changelog: https://help.testim.io/changelog
+- target: $.servers
+  description: Annotate the US and EU regional hosts.
+  update:
+    x-server-regions:
+      us: https://api.testim.io
+      eu: https://api.eu.testim.io
+- target: $.components.securitySchemes.apiKeyAuth
+  description: >-
+    Clarify the Bearer PAK- key convention and where keys are managed.
+  update:
+    description: >-
+      Static project API key sent as 'Authorization: Bearer PAK-<key>'. Generate
+      and revoke keys in the Testim app under Settings > API. Requires a Pro-tier
+      project.
+- target: $.paths./runs/executions.get
+  description: Note page-number pagination convention on execution listing.
+  update:
+    x-pagination:
+      style: page-number
+      request_params: [page, pageSize]
+      response_fields: [totalRecords, page, pageSize]
+- target: $
+  description: Record that every response carries metaData.requestId for tracing.
+  update:
+    x-request-tracing:
+      field: metaData.requestId
+      example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e

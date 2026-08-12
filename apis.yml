@@ -147,6 +147,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/testim-io-openapi-overlay.yaml
 - type: DomainSecurity
   url: security/testim-io-domain-security.yml
 - type: Authentication

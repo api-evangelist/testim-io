@@ -2,11 +2,9 @@ generated: '2026-07-21'
 method: derived
 source: openapi/testim-io-openapi.yml
 status: candidate
-description: >-
-  No official hosted/remote Model Context Protocol (MCP) server was found for
-  Testim (Tricentis) as of this pass. This is a CANDIDATE tool surface derived
-  1:1 from the public REST API operations, showing what an MCP server for Testim
-  would expose. Not an endorsement of an existing server.
+description: No official hosted/remote Model Context Protocol (MCP) server was found for Testim (Tricentis)
+  as of this pass. This is a CANDIDATE tool surface derived 1:1 from the public REST API operations, showing
+  what an MCP server for Testim would expose. Not an endorsement of an existing server.
 server:
   official: false
   hosted_url: null
@@ -74,3 +72,9 @@ tools:
   description: Delete a mobile application.
 auth:
   scheme: 'Bearer API key (Authorization: Bearer PAK-<key>)'
+deployment:
+  mode: none
+  verified: derived
+  tools: 20
+  checked: '2026-08-12'
+  source: catalog MCP census

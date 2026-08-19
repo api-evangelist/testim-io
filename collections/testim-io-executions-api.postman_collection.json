@@ -1,0 +1,1914 @@
+{
+  "item": [
+    {
+      "id": "3f3d4312-f893-4b97-b2a9-ac9cd4ea8b9f",
+      "name": "Executions",
+      "description": {
+        "content": "Get execution results",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cf64141e-96d4-4a74-9ea4-ba0c638ff0a7",
+          "name": "Get executions results",
+          "request": {
+            "name": "Get executions results",
+            "description": {
+              "content": "Get the list of executions remote runs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "runs",
+                "executions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "the page number"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "200",
+                  "description": "total rows to get on each page."
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "start of today",
+                  "description": "filter data from this given date (ISO 8601 format)"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "end of today",
+                  "description": "filter date to this date (ISO 8601 format)"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "execution status to filter by."
+                },
+                {
+                  "disabled": false,
+                  "key": "browser",
+                  "value": "<string>",
+                  "description": "browser name to filter by."
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "execution name to filter by."
+                },
+                {
+                  "disabled": false,
+                  "key": "resultLabel",
+                  "value": "<string>",
+                  "description": "resultLabel or multi resultLabels to filter by."
+                },
+                {
+                  "disabled": false,
+                  "key": "resultLabel",
+                  "value": "<string>",
+                  "description": "resultLabel or multi resultLabels to filter by."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "branch name or multi branch names to filter by."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "branch name or multi branch names to filter by."
+                },
+                {
+                  "disabled": false,
+                  "key": "strictNameSearch",
+                  "value": "false",
+                  "description": "Search execution with strict name match"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f79234c4-bcaf-4721-af3a-9b09278dfaae",
+              "name": "Executions runs result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "executions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "05-01-2020, 2020-05-01 or 2020-05-01T00:00:00"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "05-01-2020, 2020-05-01 or 2020-05-01T10:00:00"
+                    },
+                    {
+                      "key": "status",
+                      "value": "passed"
+                    },
+                    {
+                      "key": "browser",
+                      "value": "chrome"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resultLabel",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resultLabel",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "master"
+                    },
+                    {
+                      "key": "strictNameSearch",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"totalRecords\": 300,\n  \"page\": 0,\n  \"pageSize\": 200,\n  \"executions\": [\n    {\n      \"execution\": \"remote-run\",\n      \"executionId\": \"OSApM0g8f3FRQnvN\",\n      \"executionResult\": \"Failed\",\n      \"duration\": 2306.8497039706635,\n      \"totalTests\": 1,\n      \"failedCount\": 1,\n      \"concurrency\": 1,\n      \"branch\": \"master\",\n      \"browser\": [\n        \"chrome\",\n        \"chrome\"\n      ],\n      \"startTime\": \"2022-05-10 02:39:54.483000+00:00\",\n      \"turboMode\": false,\n      \"success\": false,\n      \"resultLabels\": [\n        \"scheduler-run\",\n        \"scheduler-run\"\n      ],\n      \"link\": \"string\"\n    },\n    {\n      \"execution\": \"remote-run\",\n      \"executionId\": \"OSApM0g8f3FRQnvN\",\n      \"executionResult\": \"Failed\",\n      \"duration\": 5616.389393851003,\n      \"totalTests\": 1,\n      \"failedCount\": 1,\n      \"concurrency\": 1,\n      \"branch\": \"master\",\n      \"browser\": [\n        \"chrome\",\n        \"chrome\"\n      ],\n      \"startTime\": \"2022-05-10 02:39:54.483000+00:00\",\n      \"turboMode\": false,\n      \"success\": false,\n      \"resultLabels\": [\n        \"scheduler-run\",\n        \"scheduler-run\"\n      ],\n      \"link\": \"string\"\n    }\n  ],\n  \"metaData\": {\n    \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "896b46c9-3de9-4a18-a118-f6dffa9ba6ac",
+              "name": "A required property is either missing or it's value is invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "executions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "05-01-2020, 2020-05-01 or 2020-05-01T00:00:00"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "05-01-2020, 2020-05-01 or 2020-05-01T10:00:00"
+                    },
+                    {
+                      "key": "status",
+                      "value": "passed"
+                    },
+                    {
+                      "key": "browser",
+                      "value": "chrome"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resultLabel",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resultLabel",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "master"
+                    },
+                    {
+                      "key": "strictNameSearch",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4284e007-e486-4f6d-b1ac-7f2763930fbe",
+              "name": "Issue authenticating request: missing or invalid API Key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "executions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "05-01-2020, 2020-05-01 or 2020-05-01T00:00:00"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "05-01-2020, 2020-05-01 or 2020-05-01T10:00:00"
+                    },
+                    {
+                      "key": "status",
+                      "value": "passed"
+                    },
+                    {
+                      "key": "browser",
+                      "value": "chrome"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resultLabel",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resultLabel",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "master"
+                    },
+                    {
+                      "key": "strictNameSearch",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "425c9014-ab57-44a1-8475-dffe0fdb502f",
+              "name": "API key does not have suffiecient permission to make the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "executions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "05-01-2020, 2020-05-01 or 2020-05-01T00:00:00"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "05-01-2020, 2020-05-01 or 2020-05-01T10:00:00"
+                    },
+                    {
+                      "key": "status",
+                      "value": "passed"
+                    },
+                    {
+                      "key": "browser",
+                      "value": "chrome"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resultLabel",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resultLabel",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "master"
+                    },
+                    {
+                      "key": "strictNameSearch",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9231742b-7cde-492a-956f-4057fb46be1b",
+              "name": "Specified execution ID does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "executions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "05-01-2020, 2020-05-01 or 2020-05-01T00:00:00"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "05-01-2020, 2020-05-01 or 2020-05-01T10:00:00"
+                    },
+                    {
+                      "key": "status",
+                      "value": "passed"
+                    },
+                    {
+                      "key": "browser",
+                      "value": "chrome"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resultLabel",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resultLabel",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "master"
+                    },
+                    {
+                      "key": "strictNameSearch",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce9b36cf-c8cc-4718-b4b6-4faa997f9b80",
+              "name": "Project or API key rate limiting has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "executions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "05-01-2020, 2020-05-01 or 2020-05-01T00:00:00"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "05-01-2020, 2020-05-01 or 2020-05-01T10:00:00"
+                    },
+                    {
+                      "key": "status",
+                      "value": "passed"
+                    },
+                    {
+                      "key": "browser",
+                      "value": "chrome"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resultLabel",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resultLabel",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "master"
+                    },
+                    {
+                      "key": "strictNameSearch",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "55342cd6-897a-44e7-bb82-1178e47fbfb5",
+          "name": "Get execution results",
+          "request": {
+            "name": "Get execution results",
+            "description": {
+              "content": "Get the result of an execution, together with its failing tests, with a list of the failed steps of the test",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "runs",
+                "executions",
+                ":executionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "executionId",
+                  "description": "(Required) The ID of the execution to get details"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4812a439-2c1b-4da6-94a4-3a6e36f1712d",
+              "name": "Execution result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "executions",
+                    ":executionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "executionId",
+                      "description": "(Required) The ID of the execution to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"executionId\": \"string\",\n  \"startTime\": \"2022-05-10 02:39:54.483000+00:00\",\n  \"source\": \"local\",\n  \"branch\": \"master\",\n  \"execution\": \"remote-run\",\n  \"concurrency\": 1,\n  \"executionResult\": \"Failed\",\n  \"browser\": \"chrome\",\n  \"failedCount\": 1,\n  \"totalTests\": 1,\n  \"link\": \"string\",\n  \"turboMode\": false,\n  \"duration\": 9013.470439766079,\n  \"failedTests\": {\n    \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66240e4c-eebe-45c1-a8c3-f2664aa4ee9b",
+              "name": "A required property is either missing or it's value is invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "executions",
+                    ":executionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "executionId",
+                      "description": "(Required) The ID of the execution to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f05cece-bae5-4def-addc-175f87754976",
+              "name": "Issue authenticating request: missing or invalid API Key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "executions",
+                    ":executionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "executionId",
+                      "description": "(Required) The ID of the execution to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a808755-3d2b-431a-b86a-3a2f1e21ff4c",
+              "name": "API key does not have suffiecient permission to make the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "executions",
+                    ":executionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "executionId",
+                      "description": "(Required) The ID of the execution to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87fb5f28-a8df-4824-9e3c-9e6d7d38a80b",
+              "name": "Specified execution ID does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "executions",
+                    ":executionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "executionId",
+                      "description": "(Required) The ID of the execution to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de5dc559-1ee0-4df4-b319-bd7b48463f01",
+              "name": "Project or API key rate limiting has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "executions",
+                    ":executionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "executionId",
+                      "description": "(Required) The ID of the execution to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "511fd1a0-5f0d-4741-9325-aecc66fdf4ca",
+          "name": "Get execution results",
+          "request": {
+            "name": "Get execution results",
+            "description": {
+              "content": "Get all test results in the given execution",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "runs",
+                "executions",
+                ":executionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "the page number"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "200",
+                  "description": "limit return test"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "executionId",
+                  "description": "(Required) The ID of the execution to get details"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0f053ec6-8f71-488e-b250-3a58dc68eef6",
+              "name": "Execution result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "runs",
+                    "executions",
+                    ":executionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "200"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "executionId",
+                      "description": "(Required) The ID of the execution to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"startTime\": \"2022-05-10 02:39:54.483000+00:00\",\n  \"source\": \"cli\",\n  \"branch\": \"master\",\n  \"execution\": \"remote-run\",\n  \"concurrency\": 1,\n  \"executionResult\": \"Failed\",\n  \"browser\": \"chrome\",\n  \"failedCount\": 1,\n  \"passedCount\": 1,\n  \"abortedCount\": 1,\n  \"timedOutTests\": 1,\n  \"totalTests\": 1,\n  \"link\": \"string\",\n  \"turboMode\": true,\n  \"duration\": 7058.704048859265,\n  \"tests\": [\n    {\n      \"id\": \"string\",\n      \"testName\": \"string\",\n      \"errorMessage\": \"string\",\n      \"executionStatus\": \"string\",\n      \"link\": \"string\",\n      \"failureType\": \"Other\",\n      \"failureDescription\": \"string\",\n      \"linkToFailureIssue\": \"http://demo.jira.com/issue/234234\",\n      \"baseUrl\": \"https://api.testim.io\",\n      \"startTime\": \"2022-05-10 02:39:54.483000+00:00\",\n      \"duration\": \"string\",\n      \"failedSteps\": [\n        {\n          \"reason\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"reason\": \"string\",\n          \"name\": \"string\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"testName\": \"string\",\n      \"errorMessage\": \"string\",\n      \"executionStatus\": \"string\",\n      \"link\": \"string\",\n      \"failureType\": \"Test design\",\n      \"failureDescription\": \"string\",\n      \"linkToFailureIssue\": \"http://demo.jira.com/issue/234234\",\n      \"baseUrl\": \"https://api.testim.io\",\n      \"startTime\": \"2022-05-10 02:39:54.483000+00:00\",\n      \"duration\": \"string\",\n      \"failedSteps\": [\n        {\n          \"reason\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"reason\": \"string\",\n          \"name\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"metaData\": {\n    \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b2b9e331-f000-41b0-bf98-2e080e14fae8",
+              "name": "A required property is either missing or it's value is invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "runs",
+                    "executions",
+                    ":executionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "200"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "executionId",
+                      "description": "(Required) The ID of the execution to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "045bb280-c6e0-4a42-a470-8c839963af50",
+              "name": "Issue authenticating request: missing or invalid API Key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "runs",
+                    "executions",
+                    ":executionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "200"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "executionId",
+                      "description": "(Required) The ID of the execution to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84c10fd5-0978-4ec5-bb79-f20135018100",
+              "name": "API key does not have suffiecient permission to make the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "runs",
+                    "executions",
+                    ":executionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "200"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "executionId",
+                      "description": "(Required) The ID of the execution to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18708720-ec69-44a3-9ee9-87f8b9e6d8de",
+              "name": "Specified execution ID does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "runs",
+                    "executions",
+                    ":executionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "200"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "executionId",
+                      "description": "(Required) The ID of the execution to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70811281-746e-4a40-8112-ed3c08422e8a",
+              "name": "Project or API key rate limiting has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "runs",
+                    "executions",
+                    ":executionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "200"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "executionId",
+                      "description": "(Required) The ID of the execution to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "70fab59e-7d6d-47d7-8ab9-96d61a63a8a0",
+          "name": "Get test result",
+          "request": {
+            "name": "Get test result",
+            "description": {
+              "content": "Get the result of a test, together with all its steps. <br> To see run parameters, specify \"runParams=true\". <br> To see steps results, specify \"stepsResults=true\". <br> <br> *Only remote runs are supported",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "runs",
+                "tests",
+                ":testResultId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "runParams",
+                  "value": "<boolean>",
+                  "description": "Retrieve the test's run parameters"
+                },
+                {
+                  "disabled": false,
+                  "key": "stepsResults",
+                  "value": "<boolean>",
+                  "description": "Retrieve the test's steps results"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "testResultId",
+                  "description": "(Required) The ID of the result to get details"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0daac4b3-fe72-4b8d-8843-6329fd8bb2a9",
+              "name": "Test result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "tests",
+                    ":testResultId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "runParams",
+                      "value": "false"
+                    },
+                    {
+                      "key": "stepsResults",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testResultId",
+                      "description": "(Required) The ID of the result to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"testResult\": {\n    \"testId\": \"string\",\n    \"testName\": \"string\",\n    \"link\": \"string\",\n    \"branch\": \"string\",\n    \"baseURL\": \"string\",\n    \"configuration\": \"string\",\n    \"executionDate\": \"2022-12-31\",\n    \"executionTime\": \"10:59:59\",\n    \"turboMode\": true,\n    \"testResult\": \"Passed\",\n    \"errorMessage\": \"string\",\n    \"runParams\": {},\n    \"duration\": 8734.251948085786,\n    \"testStatus\": \"string\",\n    \"browser\": \"chrome\",\n    \"owner\": \"rosie@testim.io\",\n    \"stepsResults\": [\n      {\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"treatAsWarning\": true,\n        \"description\": \"string\",\n        \"sharedStep\": false,\n        \"duration\": \"string\",\n        \"status\": \"Passed\",\n        \"errorMessage\": \"string\",\n        \"tabURL\": \"string\",\n        \"screenshot\": \"string\",\n        \"screenshots\": {\n          \"baseline\": \"string\",\n          \"result\": \"string\",\n          \"highlightedBaseline\": \"string\",\n          \"highlightedResult\": \"string\",\n          \"accessibleUntil\": 1693808555043\n        },\n        \"path\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"treatAsWarning\": true,\n        \"description\": \"string\",\n        \"sharedStep\": false,\n        \"duration\": \"string\",\n        \"status\": \"Passed\",\n        \"errorMessage\": \"string\",\n        \"tabURL\": \"string\",\n        \"screenshot\": \"string\",\n        \"screenshots\": {\n          \"baseline\": \"string\",\n          \"result\": \"string\",\n          \"highlightedBaseline\": \"string\",\n          \"highlightedResult\": \"string\",\n          \"accessibleUntil\": 1693808555043\n        },\n        \"path\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"failureType\": \"Other\",\n    \"failureDescription\": \"string\",\n    \"linkToFailureIssue\": \"http://demo.jira.com/issue/234234\",\n    \"startTime\": \"2022-05-10 02:39:54.483000+00:00\"\n  },\n  \"metaData\": {\n    \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f34145c-bbe4-46b9-aa02-76910ca14f7e",
+              "name": "A required property is either missing or it's value is invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "tests",
+                    ":testResultId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "runParams",
+                      "value": "false"
+                    },
+                    {
+                      "key": "stepsResults",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testResultId",
+                      "description": "(Required) The ID of the result to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb570a6c-a644-4a00-afc1-b3ef921a9d0d",
+              "name": "Issue authenticating request: missing or invalid API Key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "tests",
+                    ":testResultId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "runParams",
+                      "value": "false"
+                    },
+                    {
+                      "key": "stepsResults",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testResultId",
+                      "description": "(Required) The ID of the result to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c47817d-5d1e-4bb8-87e5-c3aba2928d08",
+              "name": "API key does not have suffiecient permission to make the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "tests",
+                    ":testResultId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "runParams",
+                      "value": "false"
+                    },
+                    {
+                      "key": "stepsResults",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testResultId",
+                      "description": "(Required) The ID of the result to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b38a711-f1a5-40a5-a76c-baf134a82d24",
+              "name": "Specified test result ID does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "tests",
+                    ":testResultId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "runParams",
+                      "value": "false"
+                    },
+                    {
+                      "key": "stepsResults",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testResultId",
+                      "description": "(Required) The ID of the result to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b668cd83-8354-49ee-894d-5edefa232c10",
+              "name": "Project or API key rate limiting has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    "tests",
+                    ":testResultId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "runParams",
+                      "value": "false"
+                    },
+                    {
+                      "key": "stepsResults",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testResultId",
+                      "description": "(Required) The ID of the result to get details"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"string\"\n  },\n  \"requestId\": \"RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.testim.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e952834f-b2cf-4390-ba59-68618fd4422e",
+    "name": "Testim.io Public Branches Executions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Testim.io Public API for branches and tests\n\nContact Support:\n Email: support@testim.io",
+      "type": "text/plain"
+    }
+  }
+}

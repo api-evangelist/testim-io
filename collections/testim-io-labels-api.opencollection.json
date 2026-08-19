@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testim.io Public Branches Labels API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Labels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute labels remotely",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testim.io/labels/run/:label",
+            "params": [
+              {
+                "name": "label",
+                "value": "",
+                "type": "path",
+                "description": "The name of the label to execute"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute labels remotely"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

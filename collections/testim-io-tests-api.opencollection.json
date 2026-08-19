@@ -1,0 +1,164 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testim.io Public Branches Tests API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List tests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testim.io/tests",
+            "params": [
+              {
+                "name": "branch",
+                "value": "CMPNY-23_fix_signin_form",
+                "type": "query",
+                "description": "The name of branch to list tests of."
+              },
+              {
+                "name": "includeTestStatus",
+                "value": "",
+                "type": "query",
+                "description": "Include the status of the test"
+              }
+            ]
+          },
+          "docs": "List the test names and IDs of a given branch"
+        },
+        {
+          "info": {
+            "name": "Fetch test data by test ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testim.io/tests/:testId",
+            "params": [
+              {
+                "name": "testId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the test."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The name of the branch to fetch the test information from."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific test by its ID. Optionally, a branch name can be specified as a query parameter to fetch test data from a specific branch."
+        },
+        {
+          "info": {
+            "name": "Change the test-status",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testim.io/tests/:testId/status",
+            "params": [
+              {
+                "name": "testId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the test to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change the status (active, draft, evaluating, quarantine) of a test by test ID"
+        },
+        {
+          "info": {
+            "name": "Get tests by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testim.io/tests/search",
+            "params": [
+              {
+                "name": "name",
+                "value": "test",
+                "type": "query",
+                "description": "The name of test to search."
+              }
+            ]
+          },
+          "docs": "List the ID and link of tests matching the given name"
+        },
+        {
+          "info": {
+            "name": "List all TMS test case IDs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testim.io/tests/tms/:testId/test-cases",
+            "params": [
+              {
+                "name": "branch",
+                "value": "CMPNY-23_fix_signin_form",
+                "type": "query",
+                "description": "The name of the branch with the specific test for which to list the test IDs."
+              },
+              {
+                "name": "testId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the test to update"
+              }
+            ]
+          },
+          "docs": "List IDs of all TMS test cases associated with the specific test for the specific branch (defaults to master)"
+        },
+        {
+          "info": {
+            "name": "Execute test remotely",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testim.io/tests/run/:testId",
+            "params": [
+              {
+                "name": "testId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the test to execute"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute test remotely"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

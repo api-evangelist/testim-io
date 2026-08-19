@@ -1,0 +1,94 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testim.io Public Branches Mobile Applications API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Mobile Applications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Mobile Applications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testim.io/mobile/applications"
+          },
+          "docs": "Get a list of all mobile applications related to the project"
+        },
+        {
+          "info": {
+            "name": "Upload a new mobile application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testim.io/mobile/applications",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload a new mobile application to the project"
+        },
+        {
+          "info": {
+            "name": "Get a mobile application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testim.io/mobile/applications/:applicationId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the application to get"
+              }
+            ]
+          },
+          "docs": "Get a mobile application from the project"
+        },
+        {
+          "info": {
+            "name": "Delete a mobile application",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testim.io/mobile/applications/:applicationId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the application to delete"
+              }
+            ]
+          },
+          "docs": "Delete a mobile application from the project"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

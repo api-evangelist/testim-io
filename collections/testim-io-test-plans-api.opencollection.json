@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testim.io Public Branches Test plans API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Test plans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get test-plans by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testim.io/test-plans/search",
+            "params": [
+              {
+                "name": "name",
+                "value": "plan",
+                "type": "query",
+                "description": "The name of test-plans to search."
+              }
+            ]
+          },
+          "docs": "List the ID and link of test-plans matching the given name"
+        },
+        {
+          "info": {
+            "name": "Execute test plans remotely",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testim.io/test-plans/run/:planId",
+            "params": [
+              {
+                "name": "planId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the test plan to execute"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute test plans remotely"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

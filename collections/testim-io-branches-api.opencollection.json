@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testim.io Public Branches API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Branches",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List branches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testim.io/branches"
+          },
+          "docs": "List all project branches"
+        },
+        {
+          "info": {
+            "name": "Creates a new branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testim.io/branches",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Forks source branch into a new branch"
+        },
+        {
+          "info": {
+            "name": "Merge branches",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testim.io/branches/merge",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Merge source into target branch"
+        },
+        {
+          "info": {
+            "name": "Delete the given branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testim.io/branches/:branch",
+            "params": [
+              {
+                "name": "branch",
+                "value": "",
+                "type": "path",
+                "description": "The name of the branch to delete"
+              }
+            ]
+          },
+          "docs": "Delete the given branch"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

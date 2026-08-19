@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testim.io Public Branches Suites API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Suites",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get suites by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testim.io/suites/search",
+            "params": [
+              {
+                "name": "name",
+                "value": "suite",
+                "type": "query",
+                "description": "The name of suites to search."
+              }
+            ]
+          },
+          "docs": "List the ID and link of suites matching the given name"
+        },
+        {
+          "info": {
+            "name": "Execute suites remotely",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testim.io/suites/run/:suiteId",
+            "params": [
+              {
+                "name": "suiteId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the suite to execute"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute suites remotely"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

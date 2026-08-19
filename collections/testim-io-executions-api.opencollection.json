@@ -1,0 +1,178 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testim.io Public Branches Executions API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Executions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get executions results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testim.io/runs/executions",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "the page number"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "total rows to get on each page."
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "filter data from this given date (ISO 8601 format)"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "filter date to this date (ISO 8601 format)"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "execution status to filter by."
+              },
+              {
+                "name": "browser",
+                "value": "",
+                "type": "query",
+                "description": "browser name to filter by."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "execution name to filter by."
+              },
+              {
+                "name": "resultLabel",
+                "value": "",
+                "type": "query",
+                "description": "resultLabel or multi resultLabels to filter by."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "branch name or multi branch names to filter by."
+              },
+              {
+                "name": "strictNameSearch",
+                "value": "",
+                "type": "query",
+                "description": "Search execution with strict name match"
+              }
+            ]
+          },
+          "docs": "Get the list of executions remote runs."
+        },
+        {
+          "info": {
+            "name": "Get execution results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testim.io/runs/executions/:executionId",
+            "params": [
+              {
+                "name": "executionId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the execution to get details"
+              }
+            ]
+          },
+          "docs": "Get the result of an execution, together with its failing tests, with a list of the failed steps of the test"
+        },
+        {
+          "info": {
+            "name": "Get execution results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testim.io/v2/runs/executions/:executionId",
+            "params": [
+              {
+                "name": "executionId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the execution to get details"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "the page number"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "limit return test"
+              }
+            ]
+          },
+          "docs": "Get all test results in the given execution"
+        },
+        {
+          "info": {
+            "name": "Get test result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testim.io/runs/tests/:testResultId",
+            "params": [
+              {
+                "name": "testResultId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the result to get details"
+              },
+              {
+                "name": "runParams",
+                "value": "",
+                "type": "query",
+                "description": "Retrieve the test's run parameters"
+              },
+              {
+                "name": "stepsResults",
+                "value": "",
+                "type": "query",
+                "description": "Retrieve the test's steps results"
+              }
+            ]
+          },
+          "docs": "Get the result of a test, together with all its steps. <br> To see run parameters, specify \"runParams=true\". <br> To see steps results, specify \"stepsResults=true\". <br> <br> *Only remote runs are supported"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

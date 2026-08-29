@@ -10,6 +10,17 @@ description: >-
   tests, suites, labels and test plans from CI/CD; read execution and step-level
   results; and manage mobile application binaries. Testim was backed by
   Lightspeed Venture Partners prior to acquisition.
+deliveryModel:
+  model: unknown
+  open_source: false
+  commercial: false
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve

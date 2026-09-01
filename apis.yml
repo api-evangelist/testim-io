@@ -132,7 +132,7 @@ apis:
   humanURL: https://docs.tricentis.com/testim/content/administration/api-access.htm
   baseURL: https://api.testim.io
   tags:
-  - Test plans
+  - Test Plans
   tags_raw:
   - Test plans
   properties:

@@ -1,13 +1,7 @@
 {
   "provider": "testim-io",
   "sources": [
-    "testim-io-branches-api-openapi.yml",
-    "testim-io-executions-api-openapi.yml",
-    "testim-io-labels-api-openapi.yml",
-    "testim-io-mobile-applications-api-openapi.yml",
-    "testim-io-suites-api-openapi.yml",
-    "testim-io-test-plans-api-openapi.yml",
-    "testim-io-tests-api-openapi.yml"
+    "_original/testim-io-openapi.yml"
   ],
   "outputs": [
     "testim-io-branches-api-openapi.yml",
@@ -21,6 +15,19 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "testim-io-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "testim-io-openapi.yml: declared missing tag: Mobile Applications",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "testim-io-branches-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "testim-io-executions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "testim-io-labels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "testim-io-mobile-applications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "testim-io-suites-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "testim-io-test-plans-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "testim-io-tests-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

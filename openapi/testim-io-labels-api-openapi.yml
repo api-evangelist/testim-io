@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Testim.io Public API for branches and tests
   version: 1.0.0
-  title: Testim.io Public Branches Labels API
+  title: Testim.io Public Labels API
   contact:
     email: support@testim.io
 servers:
@@ -50,32 +50,9 @@ paths:
           $ref: '#/components/responses/ApiKeyInsufficientPermissions'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      operationId: postLabelsRunByLabel
+      x-operation-id-source: derived
 components:
-  responses:
-    TooManyRequests:
-      description: Project or API key rate limiting has been reached
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InvalidApiKey:
-      description: 'Issue authenticating request: missing or invalid API Key'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InvalidOrMissingProperty:
-      description: A required property is either missing or it's value is invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ApiKeyInsufficientPermissions:
-      description: API key does not have suffiecient permission to make the request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   requestBodies:
     ExecuteParameters:
       description: A JSON object containing the execution setup information.<br>Must provide a Grid or Grid ID.<br>Params field size is limited to 67KB.
@@ -127,16 +104,6 @@ components:
                 default: false
                 type: boolean
   schemas:
-    requestId:
-      type: string
-      example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
-    metaData:
-      type: object
-      properties:
-        requestId:
-          $ref: '#/components/schemas/requestId'
-      required:
-      - requestId
     Error:
       type: object
       properties:
@@ -156,6 +123,41 @@ components:
       required:
       - string
       - error
+    metaData:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/requestId'
+      required:
+      - requestId
+    requestId:
+      type: string
+      example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
+  responses:
+    InvalidApiKey:
+      description: 'Issue authenticating request: missing or invalid API Key'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Project or API key rate limiting has been reached
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ApiKeyInsufficientPermissions:
+      description: API key does not have suffiecient permission to make the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidOrMissingProperty:
+      description: A required property is either missing or it's value is invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyAuth:
       type: http

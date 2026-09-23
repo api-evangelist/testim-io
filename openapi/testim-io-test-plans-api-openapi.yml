@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Testim.io Public API for branches and tests
   version: 1.0.0
-  title: Testim.io Public Branches Test plans API
+  title: Testim.io Public Test plans API
   contact:
     email: support@testim.io
 servers:
@@ -11,7 +11,7 @@ servers:
 security:
 - apiKeyAuth: []
 tags:
-- name: Test plans
+- name: Test Plans
   description: Search test plans by name, and execute test plans
 paths:
   /test-plans/search:
@@ -19,7 +19,7 @@ paths:
       summary: Get test-plans by name
       description: List the ID and link of test-plans matching the given name
       tags:
-      - Test plans
+      - Test Plans
       parameters:
       - name: name
         in: query
@@ -57,11 +57,13 @@ paths:
           $ref: '#/components/responses/ApiKeyInsufficientPermissions'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      operationId: getTestPlansSearch
+      x-operation-id-source: derived
   /test-plans/run/{planId}:
     post:
       summary: Execute test plans remotely
       tags:
-      - Test plans
+      - Test Plans
       requestBody:
         description: A JSON object containing the execution setup information.
         required: true
@@ -132,6 +134,8 @@ paths:
           $ref: '#/components/responses/ApiKeyInsufficientPermissions'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      operationId: postTestPlansRunByPlanId
+      x-operation-id-source: derived
 components:
   schemas:
     executionMode:
@@ -139,16 +143,6 @@ components:
       enum:
       - extension
       - selenium
-    requestId:
-      type: string
-      example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
-    metaData:
-      type: object
-      properties:
-        requestId:
-          $ref: '#/components/schemas/requestId'
-      required:
-      - requestId
     Error:
       type: object
       properties:
@@ -168,27 +162,37 @@ components:
       required:
       - string
       - error
+    metaData:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/requestId'
+      required:
+      - requestId
+    requestId:
+      type: string
+      example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
   responses:
-    TooManyRequests:
-      description: Project or API key rate limiting has been reached
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     InvalidApiKey:
       description: 'Issue authenticating request: missing or invalid API Key'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    InvalidOrMissingProperty:
-      description: A required property is either missing or it's value is invalid
+    TooManyRequests:
+      description: Project or API key rate limiting has been reached
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     ApiKeyInsufficientPermissions:
       description: API key does not have suffiecient permission to make the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidOrMissingProperty:
+      description: A required property is either missing or it's value is invalid
       content:
         application/json:
           schema:

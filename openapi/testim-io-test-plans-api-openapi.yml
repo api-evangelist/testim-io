@@ -138,11 +138,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    executionMode:
-      type: string
-      enum:
-      - extension
-      - selenium
     Error:
       type: object
       properties:
@@ -162,6 +157,9 @@ components:
       required:
       - string
       - error
+    requestId:
+      type: string
+      example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
     metaData:
       type: object
       properties:
@@ -169,12 +167,20 @@ components:
           $ref: '#/components/schemas/requestId'
       required:
       - requestId
-    requestId:
+    executionMode:
       type: string
-      example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
+      enum:
+      - extension
+      - selenium
   responses:
     InvalidApiKey:
       description: 'Issue authenticating request: missing or invalid API Key'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidOrMissingProperty:
+      description: A required property is either missing or it's value is invalid
       content:
         application/json:
           schema:
@@ -187,12 +193,6 @@ components:
             $ref: '#/components/schemas/Error'
     ApiKeyInsufficientPermissions:
       description: API key does not have suffiecient permission to make the request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InvalidOrMissingProperty:
-      description: A required property is either missing or it's value is invalid
       content:
         application/json:
           schema:

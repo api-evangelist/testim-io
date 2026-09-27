@@ -168,12 +168,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    mobileAppStatus:
-      type: string
-      enum:
-      - valid
-      - invalid
-      - parsing
     Error:
       type: object
       properties:
@@ -193,6 +187,9 @@ components:
       required:
       - string
       - error
+    requestId:
+      type: string
+      example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
     mobileAppMetaData:
       type: object
       properties:
@@ -218,6 +215,12 @@ components:
       - name
       - version
       - id
+    mobileAppStatus:
+      type: string
+      enum:
+      - valid
+      - invalid
+      - parsing
     metaData:
       type: object
       properties:
@@ -225,12 +228,15 @@ components:
           $ref: '#/components/schemas/requestId'
       required:
       - requestId
-    requestId:
-      type: string
-      example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
   responses:
     InvalidApiKey:
       description: 'Issue authenticating request: missing or invalid API Key'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidOrMissingProperty:
+      description: A required property is either missing or it's value is invalid
       content:
         application/json:
           schema:
@@ -249,12 +255,6 @@ components:
             $ref: '#/components/schemas/Error'
     MobileAppDoesNotExist:
       description: Specified application ID does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InvalidOrMissingProperty:
-      description: A required property is either missing or it's value is invalid
       content:
         application/json:
           schema:

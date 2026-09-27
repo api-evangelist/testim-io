@@ -1,5 +1,5 @@
 aid: testim-io
-name: Testim Io
+name: Testim
 description: >-
   Testim is an AI-powered functional test automation platform for web and mobile
   applications, using machine learning to author, run, and self-heal UI tests.
@@ -55,6 +55,10 @@ tags:
 - DevOps
 - Company
 - Developer Tools
+- Testing
+- QA
+- AI Testing
+- End-to-End Testing
 apis:
 - aid: testim-io:testim-io-branches-api
   name: Testim Io Branches API
@@ -106,6 +110,8 @@ apis:
   humanURL: https://docs.tricentis.com/testim/content/administration/api-access.htm
   baseURL: https://api.testim.io
   tags:
+  - Mobile App
+  tags_raw:
   - Mobile Applications
   properties:
   - type: OpenAPI
@@ -215,8 +221,17 @@ common:
   url: security/testim-io-trust-center.yml
 - type: AgentSkill
   url: skills/_index.yml
+- url: https://www.testim.io/feed/
+  type: Blog
+- type: Website
+  url: https://www.testim.io/
+- type: Documentation
+  url: https://help.testim.io/docs/testim-overview
 x-enrichment:
   date: '2026-07-21'
   status: enriched
   artifacts_added: 20
   pass: local-v1
+x-parent: tricentis
+x-relationship: acquisition
+x-acquired: 2022

@@ -167,26 +167,38 @@ paths:
       operationId: deleteMobileApplicationsByApplicationId
       x-operation-id-source: derived
 components:
+  responses:
+    ApiKeyInsufficientPermissions:
+      description: API key does not have suffiecient permission to make the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Project or API key rate limiting has been reached
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidOrMissingProperty:
+      description: A required property is either missing or it's value is invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    MobileAppDoesNotExist:
+      description: Specified application ID does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidApiKey:
+      description: 'Issue authenticating request: missing or invalid API Key'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        requestId:
-          $ref: '#/components/schemas/requestId'
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            status:
-              type: number
-              example: 400
-          required:
-          - status
-          - message
-      required:
-      - string
-      - error
     requestId:
       type: string
       example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
@@ -215,12 +227,25 @@ components:
       - name
       - version
       - id
-    mobileAppStatus:
-      type: string
-      enum:
-      - valid
-      - invalid
-      - parsing
+    Error:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/requestId'
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            status:
+              type: number
+              example: 400
+          required:
+          - status
+          - message
+      required:
+      - string
+      - error
     metaData:
       type: object
       properties:
@@ -228,37 +253,12 @@ components:
           $ref: '#/components/schemas/requestId'
       required:
       - requestId
-  responses:
-    InvalidApiKey:
-      description: 'Issue authenticating request: missing or invalid API Key'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InvalidOrMissingProperty:
-      description: A required property is either missing or it's value is invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Project or API key rate limiting has been reached
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ApiKeyInsufficientPermissions:
-      description: API key does not have suffiecient permission to make the request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    MobileAppDoesNotExist:
-      description: Specified application ID does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    mobileAppStatus:
+      type: string
+      enum:
+      - valid
+      - invalid
+      - parsing
   securitySchemes:
     apiKeyAuth:
       type: http

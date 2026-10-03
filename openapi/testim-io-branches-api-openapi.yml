@@ -194,8 +194,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    InvalidApiKey:
-      description: 'Issue authenticating request: missing or invalid API Key'
+    ApiKeyInsufficientPermissions:
+      description: API key does not have suffiecient permission to make the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Project or API key rate limiting has been reached
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BranchAlreadyExists:
+      description: A resource with that name already exists
       content:
         application/json:
           schema:
@@ -212,25 +224,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BranchAlreadyExists:
-      description: A resource with that name already exists
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Project or API key rate limiting has been reached
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ApiKeyInsufficientPermissions:
-      description: API key does not have suffiecient permission to make the request
+    InvalidApiKey:
+      description: 'Issue authenticating request: missing or invalid API Key'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    modified_at:
+      type: string
+      example: '2020-10-19T17:43:51.997Z'
+    requestId:
+      type: string
+      example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
     Error:
       type: object
       properties:
@@ -250,15 +256,6 @@ components:
       required:
       - string
       - error
-    requestId:
-      type: string
-      example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
-    created_at:
-      type: string
-      example: '2020-10-13T16:52:47.571Z'
-    modified_at:
-      type: string
-      example: '2020-10-19T17:43:51.997Z'
     metaData:
       type: object
       properties:
@@ -266,6 +263,9 @@ components:
           $ref: '#/components/schemas/requestId'
       required:
       - requestId
+    created_at:
+      type: string
+      example: '2020-10-13T16:52:47.571Z'
   securitySchemes:
     apiKeyAuth:
       type: http

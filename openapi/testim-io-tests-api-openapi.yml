@@ -347,8 +347,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Project or API key rate limiting has been reached
+    InvalidApiKey:
+      description: 'Issue authenticating request: missing or invalid API Key'
       content:
         application/json:
           schema:
@@ -359,8 +359,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    InvalidApiKey:
-      description: 'Issue authenticating request: missing or invalid API Key'
+    TooManyRequests:
+      description: Project or API key rate limiting has been reached
       content:
         application/json:
           schema:

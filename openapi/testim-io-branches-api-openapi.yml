@@ -188,32 +188,8 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
-    BranchMergeError:
-      description: Merge failed due to conflicts (forceMerge disabled)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ApiKeyInsufficientPermissions:
-      description: API key does not have suffiecient permission to make the request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Project or API key rate limiting has been reached
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BranchAlreadyExists:
       description: A resource with that name already exists
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InvalidOrMissingProperty:
-      description: A required property is either missing or it's value is invalid
       content:
         application/json:
           schema:
@@ -224,16 +200,37 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    ApiKeyInsufficientPermissions:
+      description: API key does not have suffiecient permission to make the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BranchMergeError:
+      description: Merge failed due to conflicts (forceMerge disabled)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     InvalidApiKey:
       description: 'Issue authenticating request: missing or invalid API Key'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    InvalidOrMissingProperty:
+      description: A required property is either missing or it's value is invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Project or API key rate limiting has been reached
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    modified_at:
-      type: string
-      example: '2020-10-19T17:43:51.997Z'
     requestId:
       type: string
       example: RQ-HykKrXuMxrp47BRbdWWO-41ed477e-4052-4904-ab98-034f6285e60e
@@ -256,6 +253,9 @@ components:
       required:
       - string
       - error
+    modified_at:
+      type: string
+      example: '2020-10-19T17:43:51.997Z'
     metaData:
       type: object
       properties:

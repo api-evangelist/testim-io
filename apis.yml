@@ -170,6 +170,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/testim-io-capability-edges.yml
+  name: Testim Business Capability Map
 - type: Overlay
   url: overlays/testim-io-openapi-overlay.yaml
 - type: DomainSecurity

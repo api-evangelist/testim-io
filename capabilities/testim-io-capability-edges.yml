@@ -1,0 +1,71 @@
+slug: testim-io
+provider: Testim
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 6
+edges:
+- tag: Tests
+  spec_file: testim-io-tests-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.95
+  evidence: GET /tests "List tests"; POST /tests/run/{testId} "Execute test remotely"; GET /tests/tms/{testId}/test-cases
+    "List all TMS test case IDs"
+  reason: Direct management and execution of automated tests and test cases — unambiguously software quality
+    engineering.
+- tag: Executions
+  spec_file: testim-io-executions-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.9
+  evidence: GET /runs/executions "Get executions results"; GET /runs/tests/{testResultId} "Get test result"
+  reason: Retrieval of automated test execution and test results — core automated test suite stewardship
+    within software quality engineering.
+- tag: Suites
+  spec_file: testim-io-suites-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.9
+  evidence: GET /suites/search "Get suites by name"; POST /suites/run/{suiteId} "Execute suites remotely"
+  reason: Test suite lookup and remote execution — automated test suite stewardship.
+- tag: Test Plans
+  spec_file: testim-io-test-plans-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.9
+  evidence: POST /test-plans/run/{planId} "Execute test plans remotely"; schema executionMode
+  reason: Test plan search and execution in a functional test automation platform — test strategy/suite
+    execution under software quality engineering.
+- tag: Labels
+  spec_file: testim-io-labels-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.75
+  evidence: POST /labels/run/{label} "Execute labels remotely"
+  reason: Labels here are selectors for triggering remote execution of grouped automated tests; the single
+    operation runs tests, placing it in automated test suite execution.
+- tag: Branches
+  spec_file: testim-io-branches-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.7
+  evidence: '"Testim.io Public API for branches and tests"; POST /branches "Creates a new branch", PUT
+    /branches/merge "Merge branches"'
+  reason: Branching/merging of automated UI test assets inside a test-automation platform — stewardship
+    of the automated test suite, i.e. software quality engineering. Some ambiguity since branching is
+    a source-control-like mechanic, but the branched artefacts here are tests.
